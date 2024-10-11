@@ -6,4 +6,6 @@ class User < ApplicationRecord
 
          has_many :meditation_guides
          has_many :meditation_sessions
+         has_many :bookmarks
+         has_many :books, through: :bookmarks
 end

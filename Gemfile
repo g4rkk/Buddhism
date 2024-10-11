@@ -98,3 +98,7 @@ gem 'kaminari'
 gem 'google-cloud-storage'
 
 gem 'gretel'
+
+gem 'carrierwave'
+
+gem 'tailwindcss-rails'
