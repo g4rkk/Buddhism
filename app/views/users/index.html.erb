@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ユーザーページ - 仏教の世界</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <style>
+        body {
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+        main {
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <main>
+    <section class="section">
+    <div class="container">
+      <% if user_signed_in? %>
+        <h2 class="title is-2">ようこそ戻ってきました、<%= current_user.username %>さん</h2>
+      <% else %>
+        <p>ログインしていません。</p>
+      <% end %>
+    </div>
+  </section>
+  
+
+        <section class="section">
+            <div class="container">
+                <h2 class="title is-3">瞑想の進捗</h2>
+                <p>今週の瞑想時間：3時間30分</p>
+                <progress class="progress is-primary" value="60" max="100">60%</progress>
+                <p>次のマイルストーンまで：1時間30分</p>
+            </div>
+        </section>
+    </main>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+            if ($navbarBurgers.length > 0) {
+                $navbarBurgers.forEach( el => {
+                    el.addEventListener('click', () => {
+                        const target = el.dataset.target;
+                        const $target = document.getElementById(target);
+                        el.classList.toggle('is-active');
+                        $target.classList.toggle('is-active');
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>
