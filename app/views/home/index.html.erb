@@ -18,6 +18,7 @@
             background-image: url('https://via.placeholder.com/1200x400');
             background-size: cover;
             background-position: center;
+            color: white;
         }
     </style>
 </head>
@@ -26,9 +27,8 @@
         <section class="hero is-medium">
             <div class="hero-body">
                 <div class="container has-text-centered">
-                    <h1 class="title is-1 has-text-white">
-                        心の平安への道
-                    </h1>
+                    <h1 class="title is-1">心の平安への道</h1>
+                    <h2 class="subtitle is-3">仏教の教えを学び、内なる平和を見つけましょう</h2>
                 </div>
             </div>
         </section>
@@ -39,6 +39,26 @@
                 <p class="content">
                     ここでは、仏教の基本的な教えを探求し、瞑想技術を学び、内なる平和への道を見つけることができます。初心者から経験豊富な実践者まで、あなたの精神的な旅をサポートするリソースが豊富に用意されています。
                 </p>
+                <div class="columns is-multiline">
+                    <div class="column is-one-third">
+                        <div class="box">
+                            <h3 class="title is-4">瞑想技術</h3>
+                            <p>マインドフルネスや集中瞑想など、さまざまな瞑想の方法を学ぶことができます。</p>
+                        </div>
+                    </div>
+                    <div class="column is-one-third">
+                        <div class="box">
+                            <h3 class="title is-4">教えの探求</h3>
+                            <p>仏教の教えや経典についての情報を見つけることができます。</p>
+                        </div>
+                    </div>
+                    <div class="column is-one-third">
+                        <div class="box">
+                            <h3 class="title is-4">コミュニティ</h3>
+                            <p>同じ志を持つ仲間と出会い、経験を共有することができます。</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -52,12 +72,11 @@
         </section>
     </main>
 
-
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
             if ($navbarBurgers.length > 0) {
-                $navbarBurgers.forEach( el => {
+                $navbarBurgers.forEach(el => {
                     el.addEventListener('click', () => {
                         const target = el.dataset.target;
                         const $target = document.getElementById(target);

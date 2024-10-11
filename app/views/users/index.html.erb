@@ -19,27 +19,42 @@
 <body>
 
     <main>
-    <section class="section">
-    <div class="container">
-      <% if user_signed_in? %>
-        <h2 class="title is-2">ようこそ戻ってきました、<%= current_user.username %>さん</h2>
-      <% else %>
-        <p>ログインしていません。</p>
-      <% end %>
-    </div>
-  </section>
-  
+        <section class="section">
+            <div class="container">
+                <% if user_signed_in? %>
+                    <h2 class="title is-2">ようこそ戻ってきました、<%= current_user.username %>さん</h2>
+                <% else %>
+                    <p>ログインしていません。</p>
+                <% end %>
+            </div>
+        </section>
 
         <section class="section">
             <div class="container">
-                <h2 class="title is-3">瞑想の進捗</h2>
-                <p>今週の瞑想時間：3時間30分</p>
-                <progress class="progress is-primary" value="60" max="100">60%</progress>
-                <p>次のマイルストーンまで：1時間30分</p>
+                <h1 class="title">マイページ</h1>
+                <% if user_signed_in? %>
+                    <h2 class="subtitle">ようこそ、<%= current_user.email %>さん</h2>
+
+                    <div class="content">
+                        <h3>瞑想の進捗</h3>
+                        <p>合計瞑想時間：<%= @total_meditation_time / 60 %>分</p>
+                        <h4>最近の瞑想セッション</h4>
+                        <ul>
+                            <% @recent_sessions.each do |session| %>
+                                <li>
+                                    <%= session.meditation_guide.title %> - 
+                                    <%= session.duration_seconds / 60 %>分 
+                                    (<%= session.created_at.strftime('%Y/%m/%d %H:%M') %>)
+                                </li>
+                            <% end %>
+                        </ul>
+                    </div>
+
+                    <%= link_to '瞑想ガイド一覧', meditation_guides_path, class: 'button is-primary' %>
+                <% end %>
             </div>
         </section>
     </main>
-
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
