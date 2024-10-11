@@ -1,0 +1,41 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import "daisyui";
+
+/* カスタムスタイルの追加 */
+
+.breadcrumb {
+  background-color: #FFFDF4;
+  position: fixed;
+  top: 0;
+  z-index: 50;
+}
+
+.breadcrumb a {
+  @apply hover:text-zinc-400;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.flash_success {
+  background-color: #E3ECEF;
+  color: #253A91;
+  text-align: center;
+  font: bold;
+}
+.flash_alert {
+  background-color: #F7EBEB;
+  color: #9F3030;
+  text-align: center;
+  font: bold;
+}
+.flash_notice {
+  background-color: #E4EEE4;
+  color: #505829;
+  text-align: center;
+  font: bold;
+}
