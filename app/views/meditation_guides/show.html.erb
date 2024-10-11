@@ -1,0 +1,10 @@
+<h1><%= @meditation_guide.title %></h1>
+<p><%= @meditation_guide.description %></p>
+<% if @meditation_guide.audio.attached? %>
+  <div data-controller="meditation-player" data-meditation-player-guide-id="<%= @meditation_guide.id %>">
+    <audio src="<%= url_for(@meditation_guide.audio) %>" controls></audio>
+    <button data-action="click->meditation-player#startSession">セッション開始</button>
+    <button data-action="click->meditation-player#endSession" style="display:none;">セッション終了</button>
+    <p>経過時間: <span data-meditation-player-target="timer">0:00</span></p>
+  </div>
+<% end %>

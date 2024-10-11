@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>瞑想ガイド一覧 - 仏教の世界</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+</head>
+<body>
+
+    <section class="hero is-primary">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">瞑想ガイド一覧</h1>
+                <h2 class="subtitle">様々な瞑想の方法と歴史</h2>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="section">
+            <div class="content">
+                <%= link_to '新しい瞑想ガイドを作成', new_meditation_guide_path, class: 'button is-primary' %>
+            </div>
+
+            <div class="columns is-multiline">
+                <% @meditation_guides.each do |guide| %>
+                    <div class="column is-one-third">
+                        <div class="box">
+                            <h2 class="title is-4"><%= link_to guide.title, meditation_guide_path(guide) %></h2>
+                            <p><%= guide.description %></p>
+                        </div>
+                    </div>
+                <% end %>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3 class="title is-3">瞑想の各種方法</h3>
+            <p>瞑想には多くの方法があり、それぞれの目的や効果があります。以下は代表的な瞑想の方法です：</p>
+            <ul>
+                <li><strong>マインドフルネス瞑想：</strong>現在の瞬間に注意を向ける方法。</li>
+                <li><strong>集中瞑想：</strong>特定の対象に集中することで心を落ち着ける方法。</li>
+                <li><strong>慈悲の瞑想：</strong>他者への思いやりを育てるための瞑想。</li>
+                <li><strong>トランセンデンタル・メディテーション：</strong>特定のマントラを用いて心を静める方法。</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3 class="title is-3">瞑想の歴史</h3>
+            <p>瞑想は古代から存在し、さまざまな文化や宗教で実践されてきました。以下は瞑想の歴史に関するいくつかの重要なポイントです：</p>
+            <ul>
+                <li>古代インド：ヒンドゥー教や仏教の起源において、瞑想は重要な役割を果たしました。</li>
+                <li>仏教：釈迦が瞑想を通じて悟りを開いたことから、仏教において瞑想は中心的な実践となりました。</li>
+                <li>近代：西洋でも瞑想が注目され、ストレス緩和や心の健康に役立つ方法として広まりました。</li>
+            </ul>
+        </div>
+    </div>
+
+</body>
+</html>
