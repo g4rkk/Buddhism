@@ -1,0 +1,28 @@
+{
+  "name": "runteq_buddhism",
+  "version": "1.0.0",
+  "description": "Buddhism ■サービス概要 このウェブサイトは、仏教に関する知識や教えを提供し、ユーザーが心の平安や自己成長を促進するための情報を得ることができるサービスです。 簡単にアクセスできる教えや経典を含み、瞑想や日々の心の持ち方に役立つコンテンツを提供します。 初心者から経験者まで、すべてのユーザーが仏教の教えを通じて心の安らぎを見つけられる場所です。",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npx tailwindcss -i ./src/input.css -o ./src/output.css --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/g4rkk/Buddhism.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/g4rkk/Buddhism/issues"
+  },
+  "homepage": "https://github.com/g4rkk/Buddhism#readme",
+  "devDependencies": {
+    "tailwindcss": "^3.4.13"
+  }
+}
