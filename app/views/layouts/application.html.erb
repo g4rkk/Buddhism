@@ -4,42 +4,51 @@
     <meta charset="UTF-8">
     <title>仏教の世界</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    
+    <!-- Meta tags -->
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-    <%= javascript_importmap_tags %>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" integrity="sha256-UzFD2WYH2U1dQpKDjjZK72VtPeWP50NoJjd26rnAdUI=" crossorigin="anonymous" />
-        <%= stylesheet_link_tag "application.tailwind", "data-turbo-track": "reload" %>
 
-    <%= stylesheet_link_tag 'application', 'data-turbo-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbo-track': 'reload', defer: true %>
+    <!-- Importmap for JavaScript -->
+    <%= javascript_pack_tag 'application', 'data-turbo-track': 'reload', defer: true %>
 
-    <!-- OGP メタタグ -->
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" integrity="sha256-UzFD2WYH2U1dQpKDjjZK72VtPeWP50NoJjd26rnAdUI=" crossorigin="anonymous" />
+
+    <!-- Tailwind and DaisyUI stylesheet -->
+    <%= stylesheet_link_tag "application.tailwind", "data-turbo-track": "reload" %>
+
+    <!-- OGP Meta Tags for Social Sharing -->
     <meta property="og:title" content="仏教の世界" />
     <meta property="og:description" content="仏教の入門と瞑想ガイドを提供するサービスです" />
 
-    <!-- Bulma CSS -->
+    <!-- Bulma CSS for layout -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
   </head>
 
   <body>
+    <!-- Header -->
     <%= render 'shared/header' %>
 
+    <!-- Flash messages -->
     <% if flash[:notice] %>
       <div class="notification is-info">
-        <p class="notice"><%= notice %></p>
+        <p class="notice"><%= flash[:notice] %></p>
       </div>
     <% end %>
 
     <% if flash[:alert] %>
       <div class="notification is-danger">
-        <p class="alert"><%= alert %></p>
+        <p class="alert"><%= flash[:alert] %></p>
       </div>
     <% end %>
 
+    <!-- Main content -->
     <main class="container mt-6">
       <%= yield %>
     </main>
 
+    <!-- Footer -->
     <%= render 'shared/footer' %>
   </body>
 </html>

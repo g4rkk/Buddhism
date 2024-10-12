@@ -188,10 +188,6 @@ GEM
     image_processing (1.13.0)
       mini_magick (>= 4.9.5, < 5)
       ruby-vips (>= 2.0.17, < 3)
-    importmap-rails (2.0.3)
-      actionpack (>= 6.0.0)
-      activesupport (>= 6.0.0)
-      railties (>= 6.0.0)
     io-console (0.7.2)
     irb (1.14.1)
       rdoc (>= 4.0.0)
@@ -292,6 +288,8 @@ GEM
       rack (>= 1.2.0)
     rack-protection (2.0.8.1)
       rack
+    rack-proxy (0.7.7)
+      rack
     rack-test (2.1.0)
       rack (>= 1.3)
     rails (7.0.8.4)
@@ -368,6 +366,7 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
+    semantic_range (3.0.0)
     signet (0.19.0)
       addressable (~> 2.8)
       faraday (>= 0.17.5, < 3.a)
@@ -416,6 +415,11 @@ GEM
       activemodel (>= 6.0.0)
       bindex (>= 0.4.0)
       railties (>= 6.0.0)
+    webpacker (5.4.4)
+      activesupport (>= 5.2)
+      rack-proxy (>= 0.6.1)
+      railties (>= 5.2)
+      semantic_range (>= 2.3.0)
     websocket (1.2.11)
     websocket-driver (0.7.6)
       websocket-extensions (>= 0.1.0)
@@ -443,7 +447,6 @@ DEPENDENCIES
   google_places
   gretel
   image_processing (~> 1.2)
-  importmap-rails
   jbuilder
   kaminari
   mini_magick
@@ -466,6 +469,7 @@ DEPENDENCIES
   turbo-rails
   tzinfo-data
   web-console
+  webpacker
 
 RUBY VERSION
    ruby 3.0.7p220
