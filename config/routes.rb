@@ -1,4 +1,3 @@
-# config/routes.rb
 Rails.application.routes.draw do
   # 用户认证路由
   devise_for :users
@@ -6,11 +5,13 @@ Rails.application.routes.draw do
   # 根路由
   root to: "home#index"
 
-  # 用户资源路由
-  resources :users
+  # 用户资源路由 (只显示用户的 show 页面)
+  resources :users, only: [:show]
 
-  # 冥想指南和会话路由
+  # 冥想指南路由
   resources :meditation_guides
+
+  # 冥想会话路由 (如果只允许创建会话，保持 :create)
   resources :meditation_sessions, only: [:create]
 
   # 静态页面路由
@@ -18,13 +19,13 @@ Rails.application.routes.draw do
   get 'terms_of_service', to: 'pages#terms_of_service'
   get 'contact', to: 'pages#contact'
 
-  # 书籍相关路由
+  # 书籍相关路由 (包括书籍列表、查看、创建、书签功能)
   resources :books, only: [:index, :show, :new, :create] do
     member do
-      post 'toggle_bookmark'
+      post 'toggle_bookmark'  # 书签功能
     end
   end
 
-  # 书签路由
+  # 书签路由 (用于查看用户保存的书籍)
   resources :bookmarks, only: [:index]
 end
