@@ -75,7 +75,7 @@ group :test do
 end
 
 gem 'devise'
-gem "refile", require: "refile/rails", github: 'manfe/refile'
+
 gem "mini_magick"
 
 gem 'rails-i18n', '~> 7.0.0'
