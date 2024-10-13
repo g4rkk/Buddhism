@@ -1,30 +1,23 @@
-<div class="container mx-auto px-4 py-8">
-  <h1 class="text-3xl font-bold mb-6">ようこそ、<%= current_user.username %>さん</h1>
+<h1 class="text-3xl font-bold mb-6"><%= current_user.username %>さんのマイページ</h1>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    <div>
-      <h2 class="text-2xl font-semibold mb-4">瞑想の進捗</h2>
-      <p>合計瞑想時間：<%= @total_meditation_time / 60 %> 分</p>
-      
-      <h3 class="text-xl font-semibold mb-2">最近の瞑想セッション</h3>
-      <ul>
+<div class="space-y-6">
+  <div>
+    <h2 class="text-2xl font-semibold mb-4">合計瞑想時間: <%= @total_meditation_time %> 分</h2>
+  </div>
+
+  <div>
+    <h3 class="text-xl font-semibold mb-2">最近の冥想セッション</h3>
+    <% if @recent_sessions.any? %>
+      <ul class="list-disc pl-5 space-y-2">
         <% @recent_sessions.each do |session| %>
           <li>
-            <%= session.meditation_guide.title %> - 
-            <%= session.duration_seconds / 60 %>分 
+            ガイド: <%= session.meditation_guide.title %> - 瞑想時間: <%= session.duration_seconds / 60 %> 分
             (<%= session.created_at.strftime('%Y/%m/%d %H:%M') %>)
           </li>
         <% end %>
       </ul>
-    </div>
-
-    <div>
-      <h2 class="text-2xl font-semibold mb-4">ブックマークした書籍</h2>
-      <ul>
-        <% @bookmarked_books.each do |book| %>
-          <li><%= link_to book.title, book_path(book) %></li>
-        <% end %>
-      </ul>
-    </div>
+    <% else %>
+      <p>まだ冥想の記録がありません。</p>
+    <% end %>
   </div>
 </div>

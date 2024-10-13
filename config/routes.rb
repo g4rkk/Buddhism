@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   resources :meditation_guides
 
   # 冥想会话路由 (如果只允许创建会话，保持 :create)
-  resources :meditation_sessions, only: [:create]
+  resources :meditation_sessions, only: [:new, :create]
 
   # 静态页面路由
   get 'privacy_policy', to: 'pages#privacy_policy'
@@ -20,12 +20,13 @@ Rails.application.routes.draw do
   get 'contact', to: 'pages#contact'
 
   # 书籍相关路由 (包括书籍列表、查看、创建、书签功能)
-  resources :books, only: [:index, :show, :new, :create] do
+  resources :books do
     member do
-      post 'toggle_bookmark'  # 书签功能
+      post :toggle_bookmark
+    end
+    collection do
+      get :bookmarks
+      get :my_books
     end
   end
-
-  # 书签路由 (用于查看用户保存的书籍)
-  resources :bookmarks, only: [:index]
 end

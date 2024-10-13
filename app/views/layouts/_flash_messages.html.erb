@@ -1,3 +1,11 @@
-<% flash.each do |key, value| %>
-  <%= content_tag :div, value, class: "flash_#{key}" %>
+<% flash.each do |key, message| %>
+  <% class_name = case key.to_sym
+     when :notice then 'notification is-info'  # Bulma class for info
+     when :alert then 'notification is-danger' # Bulma class for error
+     else 'notification' # Default class
+  end %>
+  
+  <div class="<%= class_name %>">
+    <p><%= message %></p>
+  </div>
 <% end %>

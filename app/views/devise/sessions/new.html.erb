@@ -14,28 +14,31 @@
       <div class="column is-5">
 
         <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+          <!-- メールアドレス -->
           <div class="field">
-            <%= f.label :email, class: "label" %>
+            <%= f.label :email, "メールアドレス", class: "label" %>
             <p class="control has-icons-left">
-              <%= f.email_field :email, autofocus: true, autocomplete: "email", :placeholder => "email", class: "input" %>
+              <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "メールアドレス", class: "input" %>
               <span class="icon is-small is-left">
                 <i class="fas fa-envelope"></i>
               </span>
             </p>
           </div>
 
+          <!-- パスワード -->
           <div class="field">
-            <%= f.label :password, class: "label" %>
+            <%= f.label :password, "パスワード", class: "label" %>
             <p class="control has-icons-left">
-              <%= f.password_field :password, autocomplete: "current-password", :placeholder => "password", class: "input" %>
+              <%= f.password_field :password, autocomplete: "current-password", placeholder: "パスワード", class: "input" %>
               <span class="icon is-small is-left">
                 <i class="fas fa-lock"></i>
               </span>
             </p>
           </div>
 
+          <!-- ログインボタン -->
           <div class="actions">
-            <%= f.submit "Log in", class: "button is-success" %>
+            <%= f.submit "ログイン", class: "button is-success" %>
           </div>
         <% end %>
 
