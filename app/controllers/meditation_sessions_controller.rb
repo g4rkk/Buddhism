@@ -8,9 +8,10 @@ class MeditationSessionsController < ApplicationController
   def create
     @meditation_session = current_user.meditation_sessions.build(meditation_session_params)
 
-    # 自动设置一个默认的 meditation_guide (这里以 ID 1 为例)
-    # 如果你有特定的逻辑来选择 guide，你可以调整这部分
-    @meditation_session.meditation_guide = MeditationGuide.first # 或指定某个 ID
+    # 仅当用户选择冥想指南时才进行关联
+    if params[:meditation_guide_id].present?
+      @meditation_session.meditation_guide = MeditationGuide.find(params[:meditation_guide_id])
+    end
 
     # 将分钟转换为秒
     @meditation_session.duration_seconds *= 60
@@ -25,6 +26,6 @@ class MeditationSessionsController < ApplicationController
   private
 
   def meditation_session_params
-    params.require(:meditation_session).permit(:duration_seconds)
+    params.require(:meditation_session).permit(:duration_seconds, :meditation_guide_id)
   end
 end

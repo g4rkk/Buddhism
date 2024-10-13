@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_10_12_192622) do
+ActiveRecord::Schema[7.0].define(version: 2024_10_13_165509) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -37,7 +37,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_12_192622) do
   create_table "meditation_guides", force: :cascade do |t|
     t.string "title"
     t.text "description"
-    t.bigint "user_id", null: false
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_meditation_guides_on_user_id"
@@ -45,7 +45,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_12_192622) do
 
   create_table "meditation_sessions", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.bigint "meditation_guide_id", null: false
+    t.bigint "meditation_guide_id"
     t.integer "duration_seconds"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
