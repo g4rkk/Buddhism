@@ -26,6 +26,7 @@ class BooksController < ApplicationController
 
   def toggle_bookmark
     @book = Book.find(params[:id])
+  
     if current_user.bookmarks.exists?(book: @book)
       current_user.bookmarks.find_by(book: @book).destroy
       flash[:notice] = 'ブックマークを削除しました。'
@@ -33,12 +34,17 @@ class BooksController < ApplicationController
       current_user.bookmarks.create(book: @book)
       flash[:notice] = 'ブックマークを追加しました。'
     end
-    redirect_to books_path
+  
+    respond_to do |format|
+      format.html { redirect_to books_path }
+      format.json { render json: { status: 'success' } }
+    end
   end
+  
 
   def bookmarks
-    @bookmarks = current_user.bookmarks.includes(:book)
-  end
+    @books = current_user.bookmarked_books
+  end  
 
   def my_books
     @books = current_user.books

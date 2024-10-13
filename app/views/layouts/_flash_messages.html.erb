@@ -1,3 +1,4 @@
+<!-- layouts/_flash_messages.html.erb -->
 <% flash.each do |key, message| %>
   <% class_name = case key.to_sym
      when :notice then 'notification is-info'  # Bulma class for info
