@@ -9,14 +9,14 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <!-- Importmap for JavaScript -->
-    <%= javascript_pack_tag 'application', 'data-turbo-track': 'reload', defer: true %>
-
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" integrity="sha256-UzFD2WYH2U1dQpKDjjZK72VtPeWP50NoJjd26rnAdUI=" crossorigin="anonymous" />
 
+    <!-- Webpacker for JavaScript -->
+    <%= javascript_pack_tag 'application', 'data-turbo-track': 'reload' %>
+
     <!-- Tailwind and DaisyUI stylesheet -->
-    <%= stylesheet_link_tag "application.tailwind", "data-turbo-track": "reload" %>
+    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbo-track': 'reload' %>
 
     <!-- OGP Meta Tags for Social Sharing -->
     <meta property="og:title" content="仏教の世界" />
@@ -31,17 +31,7 @@
     <%= render 'shared/header' %>
 
     <!-- Flash messages -->
-    <% if flash[:notice] %>
-      <div class="notification is-info">
-        <p class="notice"><%= flash[:notice] %></p>
-      </div>
-    <% end %>
-
-    <% if flash[:alert] %>
-      <div class="notification is-danger">
-        <p class="alert"><%= flash[:alert] %></p>
-      </div>
-    <% end %>
+    <%= render 'layouts/flash_messages' %>
 
     <!-- Main content -->
     <main class="container mt-6">

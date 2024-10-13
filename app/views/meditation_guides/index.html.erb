@@ -1,44 +1,53 @@
+<!-- views/meditation_guides/index.html.erb -->
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>瞑想ガイド一覧 - 仏教の世界</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
-</head>
-<body>
 
-    <section class="hero is-primary">
-        <div class="hero-body">
-            <div class="container">
-                <h1 class="title">瞑想ガイド一覧</h1>
-                <h2 class="subtitle">様々な瞑想の方法と歴史</h2>
-            </div>
+</head>
+<body class="bg-gray-100">
+
+    <!-- Hero Section -->
+    <section class="text-black py-10">
+        <div class="container mx-auto">
+            <h1 class="text-4xl text-center font-bold">瞑想ガイド一覧</h1>
+            <h2 class="text-2xl text-center mt-2">様々な瞑想の方法と歴史</h2>
         </div>
     </section>
 
-    <div class="container">
-        <div class="section">
-            <div class="content">
-                <%= link_to '新しい瞑想ガイドを作成', new_meditation_guide_path, class: 'button is-primary' %>
-            </div>
+    <!-- Main Content Section -->
+    <div class="container mx-auto py-10">
+        <div class="mb-6 flex justify-center">
+            <%= link_to '今日の瞑想時間の記録', new_meditation_session_path, class: 'btn btn-accent' %>
+        </div>
 
-            <div class="columns is-multiline">
-                <% @meditation_guides.each do |guide| %>
-                    <div class="column is-one-third">
-                        <div class="box">
-                            <h2 class="title is-4"><%= link_to guide.title, meditation_guide_path(guide) %></h2>
-                            <p><%= guide.description %></p>
+        <!-- 瞑想ガイドの選択 -->
+        <div class="mb-8">
+            <h3 class="text-2xl font-semibold mb-4">瞑想ガイドを選択</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <% if @meditation_guides.present? %>
+                    <% @meditation_guides.first(2).each do |guide| %>
+                        <div class="card shadow-xl bg-white p-4">
+                            <h2 class="text-xl font-bold mb-2"><%= link_to guide.title, meditation_guide_path(guide), class: "hover:underline text-primary" %></h2>
+                            <p class="text-gray-600"><%= guide.description %></p>
+                            <%= link_to 'このガイドを選択', meditation_guide_path(guide), class: 'btn btn-accent mt-4' %>
                         </div>
-                    </div>
+                    <% end %>
+                <% else %>
+                    <p class="text-gray-600">まだ瞑想ガイドがありません。</p>
                 <% end %>
             </div>
         </div>
+        
 
-        <div class="section">
-            <h3 class="title is-3">瞑想の各種方法</h3>
-            <p>瞑想には多くの方法があり、それぞれの目的や効果があります。以下は代表的な瞑想の方法です：</p>
-            <ul>
+        <!-- 瞑想の各種方法 Section -->
+        <div class="mt-12">
+            <h3 class="text-3xl font-bold mb-4">瞑想の各種方法</h3>
+            <p class="text-lg mb-4">瞑想には多くの方法があり、それぞれの目的や効果があります。以下は代表的な瞑想の方法です：</p>
+            <ul class="list-disc pl-5 space-y-2">
                 <li><strong>マインドフルネス瞑想：</strong>現在の瞬間に注意を向ける方法。</li>
                 <li><strong>集中瞑想：</strong>特定の対象に集中することで心を落ち着ける方法。</li>
                 <li><strong>慈悲の瞑想：</strong>他者への思いやりを育てるための瞑想。</li>
@@ -46,10 +55,11 @@
             </ul>
         </div>
 
-        <div class="section">
-            <h3 class="title is-3">瞑想の歴史</h3>
-            <p>瞑想は古代から存在し、さまざまな文化や宗教で実践されてきました。以下は瞑想の歴史に関するいくつかの重要なポイントです：</p>
-            <ul>
+        <!-- 瞑想の歴史 Section -->
+        <div class="mt-12">
+            <h3 class="text-3xl font-bold mb-4">瞑想の歴史</h3>
+            <p class="text-lg mb-4">瞑想は古代から存在し、さまざまな文化や宗教で実践されてきました。以下は瞑想の歴史に関するいくつかの重要なポイントです：</p>
+            <ul class="list-disc pl-5 space-y-2">
                 <li>古代インド：ヒンドゥー教や仏教の起源において、瞑想は重要な役割を果たしました。</li>
                 <li>仏教：釈迦が瞑想を通じて悟りを開いたことから、仏教において瞑想は中心的な実践となりました。</li>
                 <li>近代：西洋でも瞑想が注目され、ストレス緩和や心の健康に役立つ方法として広まりました。</li>

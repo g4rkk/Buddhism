@@ -67,5 +67,11 @@ Rails.application.configure do
 
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
+
+  # Set mailer URL options
   config.action_mailer.default_url_options = { host: 'localhost', port: 4000 }
+
+  # Allow Web Console access from Docker's IP address.
+  config.web_console.allowed_ips = '0.0.0.0/0'
+
 end

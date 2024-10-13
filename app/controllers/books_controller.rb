@@ -2,7 +2,7 @@ class BooksController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
 
   def index
-    @books = Book.all.order(:title)
+    @books = Book.all
   end
 
   def show
@@ -14,9 +14,11 @@ class BooksController < ApplicationController
   end
 
   def create
-    @book = Book.new(book_params)
+    @book = current_user.books.build(book_params)
+    
     if @book.save
-      redirect_to @book, notice: '書籍が正常に作成されました。'
+      flash[:notice] = "書籍が正常にアップロードされました。"
+      redirect_to books_path
     else
       render :new
     end
@@ -34,9 +36,17 @@ class BooksController < ApplicationController
     redirect_to books_path
   end
 
+  def bookmarks
+    @bookmarks = current_user.bookmarks.includes(:book)
+  end
+
+  def my_books
+    @books = current_user.books
+  end
+
   private
 
   def book_params
-    params.require(:book).permit(:title, :sect, :file, :number)
+    params.require(:book).permit(:title, :sect, :number, :file)
   end
 end

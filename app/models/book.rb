@@ -1,9 +1,6 @@
 class Book < ApplicationRecord
-  has_many :bookmarks
-  has_many :users, through: :bookmarks
+  belongs_to :user
+  mount_uploader :file, BookUploader
 
-  validates :title, presence: true
-  validates :number, presence: true, uniqueness: true
-
-  mount_uploader :file, BookFileUploader
+  has_many :bookmarks, dependent: :destroy
 end
