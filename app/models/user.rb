@@ -1,11 +1,13 @@
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  # Devise 模块
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-         has_many :meditation_guides
-         has_many :meditation_sessions
-         has_many :bookmarks
-         has_many :books, through: :bookmarks
+  # 冥想指南和会话关联
+  has_many :meditation_guides
+  has_many :meditation_sessions
+
+  # 书签和书籍的关联
+  has_many :bookmarks
+  has_many :bookmarked_books, through: :bookmarks, source: :book
 end
