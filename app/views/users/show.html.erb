@@ -1,17 +1,23 @@
 <h1 class="text-3xl font-bold mb-6"><%= current_user.username %>さんのマイページ</h1>
 
-<div class="space-y-6">
-  <div>
-    <h2 class="text-2xl font-semibold mb-4">合計瞑想時間: <%= @total_meditation_time %> 分</h2>
+<div class="space-y-6 p-6 bg-white shadow-md rounded-lg">
+  <!-- 合計瞑想時間部分 -->
+  <div class="p-4 bg-green-100 rounded-lg shadow-md">
+    <h2 class="text-2xl font-semibold mb-4">
+      合計瞑想時間: <span class="text-green-700"><%= @total_meditation_time %></span>
+    </h2>
+    <canvas id="meditationChart" class="w-full h-64" data-total-time="<%= @total_meditation_time_in_minutes %>"></canvas>
   </div>
 
-  <div>
+  <!-- 最近的冥想セッション -->
+  <div class="p-4 bg-blue-100 rounded-lg shadow-md">
     <h3 class="text-xl font-semibold mb-2">最近の冥想セッション</h3>
     <% if @recent_sessions.any? %>
       <ul class="list-disc pl-5 space-y-2">
         <% @recent_sessions.each do |session| %>
           <li>
-            ガイド: <%= session.meditation_guide.title %> - 瞑想時間: <%= session.duration_seconds / 60 %> 分
+            <strong>ガイド: </strong><%= session.meditation_guide ? session.meditation_guide.title : "今日の瞑想" %> - 
+            <strong>瞑想時間: </strong><%= session.duration_seconds / 60 %> 分 
             (<%= session.created_at.strftime('%Y/%m/%d %H:%M') %>)
           </li>
         <% end %>

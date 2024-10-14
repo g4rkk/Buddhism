@@ -102,6 +102,4 @@ gem 'carrierwave'
 gem 'tailwindcss-rails'
 gem 'jsbundling-rails'
 
-gem 'webpacker'
-
 gem 'groupdate'
