@@ -1,11 +1,13 @@
-<h1><%= @meditation_guide.title %></h1>
-<p><%= @meditation_guide.description %></p>
+<!-- app/views/meditation_guides/show.html.erb -->
+<div class="container mx-auto py-10">
+  <h1 class="text-4xl font-bold text-center"><%= @meditation_guide.title %></h1>
+  <p class="text-lg mt-4 text-center text-gray-600"><%= @meditation_guide.description %></p>
 
-<% if @meditation_guide.audio.attached? %>
-  <div data-controller="meditation-player" data-meditation-player-guide-id="<%= @meditation_guide.id %>">
-    <audio src="<%= url_for(@meditation_guide.audio) %>" controls></audio>
-    <button data-action="click->meditation-player#startSession">セッション開始</button>
-    <button data-action="click->meditation-player#endSession" style="display:none;">セッション終了</button>
-    <p>経過時間: <span data-meditation-player-target="timer">0:00</span></p>
+  <div class="mt-6 text-center">
+    <%= link_to 'このガイドを選択', new_meditation_session_path(meditation_guide_id: @meditation_guide.id), class: 'btn btn-accent' %>
   </div>
-<% end %>
+
+  <div class="mt-6 text-center">
+    <%= link_to '瞑想ガイド一覧に戻る', meditation_guides_path, class: 'text-primary hover:underline' %>
+  </div>
+</div>

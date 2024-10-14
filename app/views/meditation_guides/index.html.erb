@@ -21,49 +21,18 @@
             <%= link_to '今日の瞑想時間の記録', new_meditation_session_path, class: 'btn btn-accent' %>
         </div>
 
-        <!-- 瞑想ガイドの選択 -->
-        <div class="mb-8">
-            <h3 class="text-2xl font-semibold text-center mb-4">瞑想ガイドを選択</h3>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <% if @meditation_guides.present? %>
-                    <% @meditation_guides.each do |guide| %>
-                        <div class="card shadow-xl bg-white p-6 rounded-lg text-center">
-                            <h2 class="text-xl font-bold mb-2"><%= link_to guide.title, meditation_guide_path(guide), class: "hover:underline text-primary" %></h2>
-                            <p class="text-gray-600"><%= guide.description %></p>
-                            <%= link_to 'このガイドを選択', meditation_guide_path(guide), class: 'btn btn-accent mt-4' %>
-                        </div>
-                    <% end %>
-                <% else %>
-                    <p class="text-gray-600 text-center">まだ瞑想ガイドがありません。</p>
-                <% end %>
-            </div>
-        </div>
-
         <!-- 瞑想の各種方法 Section -->
         <div class="mt-12">
             <h3 class="text-3xl font-bold text-center mb-4">瞑想の各種方法</h3>
             <p class="text-lg mb-6 text-center">瞑想には多くの方法があり、それぞれの目的や効果があります。以下は代表的な瞑想の方法です：</p>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div class="card bg-white p-6 rounded-lg shadow-md">
-                    <h4 class="text-xl font-semibold mb-2">マインドフルネス瞑想</h4>
-                    <p class="text-gray-600 mb-4">現在の瞬間に注意を向ける方法。心の平静とストレスの軽減に効果的。</p>
-                    <%= link_to '詳細を見る', '#', class: 'btn btn-primary' %>
-                </div>
-                <div class="card bg-white p-6 rounded-lg shadow-md">
-                    <h4 class="text-xl font-semibold mb-2">集中瞑想</h4>
-                    <p class="text-gray-600 mb-4">特定の対象に集中することで心を落ち着ける方法。精神集中力を高める。</p>
-                    <%= link_to '詳細を見る', '#', class: 'btn btn-primary' %>
-                </div>
-                <div class="card bg-white p-6 rounded-lg shadow-md">
-                    <h4 class="text-xl font-semibold mb-2">慈悲の瞑想</h4>
-                    <p class="text-gray-600 mb-4">他者への思いやりを育て、内なる平和を感じるための瞑想。</p>
-                    <%= link_to '詳細を見る', '#', class: 'btn btn-primary' %>
-                </div>
-                <div class="card bg-white p-6 rounded-lg shadow-md">
-                    <h4 class="text-xl font-semibold mb-2">トランセンデンタル・メディテーション</h4>
-                    <p class="text-gray-600 mb-4">特定のマントラを用いて深いリラクゼーションを達成する方法。</p>
-                    <%= link_to '詳細を見る', '#', class: 'btn btn-primary' %>
-                </div>
+                <% @meditation_guides.each do |guide| %>
+                    <div class="card bg-white p-6 rounded-lg shadow-md">
+                        <h4 class="text-xl font-semibold mb-2"><%= guide.title %></h4>
+                        <p class="text-gray-600 mb-4"><%= guide.description %></p>
+                        <%= link_to '詳細を見る', meditation_guide_path(guide.slug), class: 'btn btn-primary' if guide.slug.present? %>
+                    </div>
+                <% end %>
             </div>
         </div>
 
