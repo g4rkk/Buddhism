@@ -1,0 +1,8 @@
+xXXclass CreateBuddhistScriptures < ActiveRecord::Migration[7.0]
+  def change
+    create_table :buddhist_scriptures do |t|
+
+      t.timestamps
+    end
+  end
+end

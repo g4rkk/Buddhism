@@ -16,7 +16,4 @@ test:
 
 production:
   <<: *default
-  database: myapp_production
-  username: postgres   # 替换为实际的生产环境数据库用户名
-  password: password   # 替换为实际的生产环境数据库密码
-  host: db           # 替换为生产环境数据库主机（可以是远程主机）
+  url: <%= ENV['DATABASE_URL'] %>
