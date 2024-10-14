@@ -1,5 +1,10 @@
 <h1 class="text-3xl font-bold mb-6"><%= current_user.username %>さんのマイページ</h1>
 
+<!-- プロフィールボタン -->
+<div class="mb-6">
+  <%= link_to 'プロフィール', edit_profile_path, class: "btn btn-primary btn-wide" %>
+</div>
+
 <div class="space-y-6 p-6 bg-white shadow-md rounded-lg">
   <!-- 合計瞑想時間部分 -->
   <div class="p-4 bg-green-100 rounded-lg shadow-md">
