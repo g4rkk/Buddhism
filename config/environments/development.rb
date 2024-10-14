@@ -73,5 +73,4 @@ Rails.application.configure do
 
   # Allow Web Console access from Docker's IP address.
   config.web_console.allowed_ips = '0.0.0.0/0'
-
 end

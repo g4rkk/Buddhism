@@ -7,8 +7,9 @@ module.exports = function(api) {
 
   if (!validEnv.includes(currentEnv)) {
     throw new Error(
-      'Please specify a valid `NODE_ENV` or `BABEL_ENV` environment variable. ' +
-        'Valid values are "development", "test", and "production". Instead, received: ' +
+      'Please specify a valid `NODE_ENV` or ' +
+        '`BABEL_ENV` environment variables. Valid values are "development", ' +
+        '"test", and "production". Instead, received: ' +
         JSON.stringify(currentEnv) +
         '.'
     )
@@ -35,7 +36,6 @@ module.exports = function(api) {
         }
       ]
     ].filter(Boolean),
-
     plugins: [
       'babel-plugin-macros',
       '@babel/plugin-syntax-dynamic-import',
@@ -65,14 +65,10 @@ module.exports = function(api) {
           loose: true
         }
       ],
-      '@babel/plugin-proposal-optional-chaining',  // 支持可选链操作符
-      '@babel/plugin-proposal-nullish-coalescing-operator',  // 支持空值合并运算符
-      '@babel/plugin-proposal-logical-assignment-operators',  // 支持空值合并赋值运算符
       [
         '@babel/plugin-transform-runtime',
         {
-          helpers: false,
-          regenerator: true
+          helpers: false
         }
       ],
       [

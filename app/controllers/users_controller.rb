@@ -19,11 +19,13 @@ class UsersController < ApplicationController
   def set_meditation_data
     @user = current_user
     total_seconds = @user.meditation_sessions.sum(:duration_seconds)
-    @total_meditation_time = format_time_in_minutes_and_hours(total_seconds)
-    @recent_sessions = @user.meditation_sessions.order(created_at: :desc).limit(5)
+    @total_meditation_time_in_minutes = total_seconds / 60 # 用于图表的数据
+    @total_meditation_time = format_time_in_minutes_and_hours(total_seconds) # 以小时和分钟格式显示
+  
+    # 确保 @recent_sessions 始终是一个数组，避免 nil 引发错误
+    @recent_sessions = @user.meditation_sessions.order(created_at: :desc).limit(5) || []
   end
   
-  private
   
   def format_time_in_minutes_and_hours(total_seconds)
     minutes = total_seconds / 60

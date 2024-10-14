@@ -1,35 +1,37 @@
+import Chart from 'chart.js/auto';
+
 document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.toggle-bookmark').forEach((button) => {
-    button.addEventListener('click', function(event) {
-      event.preventDefault();  // 防止页面刷新
+  // 获取 <canvas> 元素
+  const meditationChartElement = document.getElementById('meditationChart');
 
-      const bookId = this.dataset.bookId;  // 获取书籍ID
-      const url = `/books/${bookId}/toggle_bookmark`;
+  if (meditationChartElement) {
+    // 从 HTML 的 data 属性中获取总冥想时间
+    const totalMeditationTime = meditationChartElement.dataset.totalTime;
+    
+    // 调试信息输出到控制台
+    console.log("Total meditation time for chart:", totalMeditationTime);
 
-      // 发送 AJAX 请求
-      fetch(url, {
-        method: 'POST',
-        headers: {
-          'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        }
-      })
-      .then(response => response.json())
-      .then(data => {
-        // 注释掉这部分动态创建的 Flash 消息
-        /*
-        const flashContainer = document.createElement('div');
-        flashContainer.className = 'alert alert-success shadow-lg mb-4';
-        flashContainer.innerHTML = `<div>${data.message}</div>`;
-        
-        document.body.prepend(flashContainer);
-        
-        setTimeout(() => {
-          flashContainer.remove();
-        }, 3000);
-        */
+    if (totalMeditationTime) {
+      const ctx = meditationChartElement.getContext('2d');
+      const chart = new Chart(ctx, {
+        type: 'doughnut',  // 图表类型
+        data: {
+          labels: ['瞑想時間'],
+          datasets: [{
+            label: '合計瞑想時間',
+            data: [totalMeditationTime],  // 将冥想时间传递给图表
+            backgroundColor: ['#4CAF50'],  // 图表的颜色
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'bottom',  // 图例显示在底部
+            },
+          },
+        },
       });
-    });
-  });
+    }
+  }
 });
