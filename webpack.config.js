@@ -1,13 +1,37 @@
-const path = require('path')
+const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
-  mode: "production",
-  entry: {
-    application: "./app/javascript/application.js"
-  },
+  mode: 'production',
+  entry: './app/javascript/application.js',
   output: {
-    filename: "[name].js",
-    sourceMapFilename: "[name].js.map",
-    path: path.resolve(__dirname, "app/assets/builds"),
+    filename: 'application.js',
+    path: path.resolve(__dirname, 'app/assets/builds'),
   },
-}
+  module: {
+    rules: [
+      {
+        test: /\.scss$/,
+        use: [
+          'style-loader',
+          'css-loader',
+          'postcss-loader',
+          'sass-loader'
+        ]
+      },
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          'css-loader',
+          'postcss-loader'
+        ]
+      }
+    ]
+  },
+  plugins: [
+    new webpack.optimize.LimitChunkCountPlugin({
+      maxChunks: 1
+    })
+  ]
+};

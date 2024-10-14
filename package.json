@@ -15,7 +15,9 @@
     "type": "git",
     "url": "git+https://github.com/g4rkk/Buddhism.git"
   },
-  "keywords": [],
+  "keywords": [
+
+  ],
   "author": "",
   "license": "ISC",
   "bugs": {
@@ -57,5 +59,6 @@
     "chart.js": "^4.4.4",
     "daisyui": "^4.12.13",
     "stimulus": "^3.2.2"
-  }
+  },
+  "packageManager": "yarn@1.22.22"
 }
