@@ -19,9 +19,14 @@ class MeditationGuidesController < ApplicationController
     end
   end
 
+  # 标准的 show 动作，使用 slug 查找
+  def show
+    @meditation_guide = MeditationGuide.find_by!(slug: params[:slug])
+  end
+
   private
 
   def meditation_guide_params
-    params.require(:meditation_guide).permit(:title, :description, :audio)
+    params.require(:meditation_guide).permit(:title, :description, :audio, :slug)
   end
 end

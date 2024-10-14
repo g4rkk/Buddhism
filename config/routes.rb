@@ -12,10 +12,10 @@ Rails.application.routes.draw do
   get 'profile/edit', to: 'users#edit_profile', as: 'edit_profile'
   patch 'profile/update', to: 'users#update_profile', as: 'update_profile'
 
-  # 冥想指南路由
-  resources :meditation_guides
+  # 冥想指南路由，使用 slug 作为参数
+  resources :meditation_guides, param: :slug, only: [:index, :show, :new, :create]
 
-  # 冥想会话路由 (如果只允许创建会话，保持 :create)
+  # 冥想会话路由 (如果只允许创建会话，保持 :new 和 :create)
   resources :meditation_sessions, only: [:new, :create]
 
   # 静态页面路由
