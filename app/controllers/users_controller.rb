@@ -10,8 +10,21 @@ class UsersController < ApplicationController
     # @user, @total_meditation_time, @recent_sessions 已在 before_action 中设置
   end
 
-  def edit
+  # 编辑用户的プロフィール
+  def edit_profile
     @user = current_user
+  end
+
+  # 更新用户的プロフィール
+  def update_profile
+    @user = current_user
+    if @user.update(user_params)
+      flash[:notice] = "プロフィールが更新されました。"
+      redirect_to user_path(@user)
+    else
+      flash[:alert] = "プロフィールの更新に失敗しました。"
+      render :edit_profile
+    end
   end
 
   private
@@ -26,7 +39,6 @@ class UsersController < ApplicationController
     @recent_sessions = @user.meditation_sessions.order(created_at: :desc).limit(5) || []
   end
   
-  
   def format_time_in_minutes_and_hours(total_seconds)
     minutes = total_seconds / 60
     hours = minutes / 60
@@ -36,5 +48,9 @@ class UsersController < ApplicationController
     else
       "#{remaining_minutes}分"
     end
+  end
+
+  def user_params
+    params.require(:user).permit(:username, :email)
   end  
 end

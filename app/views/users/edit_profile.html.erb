@@ -1,0 +1,26 @@
+<div class="card w-full bg-base-100 shadow-xl">
+  <div class="card-body">
+    <h1 class="card-title text-3xl font-bold mb-6">プロフィールを編集</h1>
+
+    <%= form_for @user, url: update_profile_path, method: :patch, class: "space-y-4" do |f| %>
+      <div class="form-control">
+        <label class="label">
+          <span class="label-text">ユーザーネーム</span>
+        </label>
+        <%= f.text_field :username, class: "input input-bordered w-full" %>
+      </div>
+
+      <div class="form-control">
+        <label class="label">
+          <span class="label-text">メールアドレス</span>
+        </label>
+        <%= f.email_field :email, class: "input input-bordered w-full" %>
+      </div>
+
+      <div class="card-actions justify-end">
+        <%= f.submit "更新", class: "btn btn-primary" %>
+        <%= link_to 'キャンセル', user_path(@user), class: "btn btn-outline" %>
+      </div>
+    <% end %>
+  </div>
+</div>

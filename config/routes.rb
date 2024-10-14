@@ -8,6 +8,10 @@ Rails.application.routes.draw do
   # 用户资源路由 (只显示用户的 show 页面)
   resources :users, only: [:show]
 
+  # プロフィール编辑和更新路由
+  get 'profile/edit', to: 'users#edit_profile', as: 'edit_profile'
+  patch 'profile/update', to: 'users#update_profile', as: 'update_profile'
+
   # 冥想指南路由
   resources :meditation_guides
 
