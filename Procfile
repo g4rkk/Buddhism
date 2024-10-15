@@ -1,1 +1,0 @@
-web: bin/rails server -p 4000 -b 0.0.0.0
