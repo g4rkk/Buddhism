@@ -92,4 +92,6 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   config.hosts << "buddhismworld.onrender.com"
+
+  config.log_level = :debug
 end
