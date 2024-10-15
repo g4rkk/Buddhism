@@ -6,6 +6,8 @@ services:
       - ./tmp/db:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: password
+    ports:
+      - "5433:5432"  # 将数据库端口暴露给外部
 
   web:
     build: .

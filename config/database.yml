@@ -18,8 +18,10 @@ production:
   adapter: postgresql
   encoding: unicode
   pool: 5
-  database: myapp_production
-  username: postgres
-  password: password
-  host: db  # 这里 db 是指 docker-compose 文件中的 db 服务
+  database: buddhismrenderdb
+  username: saoirseclerks
+  password: 2ngrdsajh0GWsWPslIJDcloHE1oi1DBE
+  host: dpg-cs6vnhd6l47c738u68ig-a.singapore-postgres.render.com
+  port: 5432
+
 
