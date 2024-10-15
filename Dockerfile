@@ -33,8 +33,12 @@ RUN bundle install
 ADD package.json yarn.lock /myapp/
 RUN yarn install  # 移除 --check-files
 
-# アプリケーションコードを追加
+# 应用代码
 ADD . /myapp
+
+# 添加 RAILS_MASTER_KEY 参数
+ARG RAILS_MASTER_KEY
+ENV RAILS_MASTER_KEY=${RAILS_MASTER_KEY}
 
 # 生产环境中预编译资产
 RUN bundle exec rails assets:precompile RAILS_ENV=production
