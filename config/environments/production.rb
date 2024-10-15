@@ -99,5 +99,4 @@ Rails.application.configure do
   config.log_level = :debug
 
   config.assets.paths << Rails.root.join('public', 'packs')
-  config.assets.paths << Rails.root.join('app', 'assets', 'images')
 end

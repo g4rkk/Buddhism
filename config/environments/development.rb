@@ -76,6 +76,5 @@ Rails.application.configure do
 
   config.public_file_server.enabled = true
 
-  cconfig.assets.paths << Rails.root.join('app', 'assets', 'images')
   config.assets.paths << Rails.root.join('public', 'packs')
 end
