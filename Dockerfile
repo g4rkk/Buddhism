@@ -1,3 +1,4 @@
+# 使用 Ruby 3.0 作为基础镜像
 FROM ruby:3.0
 
 # 必要なパッケージをインストール
@@ -6,6 +7,7 @@ RUN apt-get update -qq && apt-get install -y \
   curl \
   libpq-dev \
   nodejs \
+  yarn \
   tzdata \
   postgresql-client \
   git \
@@ -22,11 +24,25 @@ ADD Gemfile /myapp/Gemfile
 ADD Gemfile.lock /myapp/Gemfile.lock
 RUN bundle install
 
+# Yarnで前端依赖をインストール
+ADD package.json yarn.lock /myapp/
+RUN yarn install --check-files
+
 # アプリケーションコードを追加
 ADD . /myapp
 
+# 生产环境中预编译资产
+RUN bundle exec rails assets:precompile RAILS_ENV=production
+
+# 清理缓存以减少镜像大小
+RUN apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
 # ポートの公開
 EXPOSE 4000
+
+# 设置生产环境变量
+ENV RAILS_ENV=production
 
 # Railsサーバーの起動
 CMD ["rails", "server", "-b", "0.0.0.0", "-p", "4000"]
