@@ -75,6 +75,4 @@ Rails.application.configure do
   config.web_console.allowed_ips = '0.0.0.0/0'
 
   config.public_file_server.enabled = true
-
-  config.assets.paths << Rails.root.join('public', 'packs')
 end

@@ -97,6 +97,4 @@ Rails.application.configure do
   config.hosts << "buddhismworld.onrender.com"
 
   config.log_level = :debug
-
-  config.assets.paths << Rails.root.join('public', 'packs')
 end
