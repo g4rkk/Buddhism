@@ -13,8 +13,8 @@ RUN apt-get update -qq && apt-get install -y \
   pkg-config \
   python3
 
-# 安装 Node.js 16.x 版本
-RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && \
+# 安装 Node.js 22.x 版本
+RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - && \
     apt-get install -y nodejs
 
 # 安装 yarn
