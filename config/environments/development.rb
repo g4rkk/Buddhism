@@ -57,7 +57,7 @@ Rails.application.configure do
   config.active_record.verbose_query_logs = true
 
   # Suppress logger output for asset requests.
-  config.assets.quiet = true
+  #config.assets.quiet = true
 
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
@@ -73,4 +73,9 @@ Rails.application.configure do
 
   # Allow Web Console access from Docker's IP address.
   config.web_console.allowed_ips = '0.0.0.0/0'
+
+  config.public_file_server.enabled = true
+
+  cconfig.assets.paths << Rails.root.join('app', 'assets', 'images')
+  config.assets.paths << Rails.root.join('public', 'packs')
 end
