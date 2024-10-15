@@ -6,8 +6,6 @@ RUN apt-get update -qq && apt-get install -y \
   build-essential \
   curl \
   libpq-dev \
-  nodejs \
-  npm \
   tzdata \
   postgresql-client \
   git \
@@ -15,7 +13,11 @@ RUN apt-get update -qq && apt-get install -y \
   pkg-config \
   python3
 
-# 安装 yarn 1.x 版本
+# 安装 Node.js 14.x 版本
+RUN curl -fsSL https://deb.nodesource.com/setup_14.x | bash - && \
+    apt-get install -y nodejs
+
+# 安装 yarn
 RUN npm install -g yarn@1.22.19
 
 # アプリケーションディレクトリの作成
