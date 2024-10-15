@@ -11,27 +11,32 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.scss$/,
+        test: /\.scss$/, // 处理 .scss 文件
         use: [
           'style-loader',
           'css-loader',
           'postcss-loader',
-          'sass-loader'
-        ]
+          {
+            loader: 'sass-loader',
+            options: {
+              implementation: require('sass'), // 明确使用 Dart Sass
+            },
+          },
+        ],
       },
       {
-        test: /\.css$/,
+        test: /\.css$/, // 处理 .css 文件
         use: [
           'style-loader',
           'css-loader',
-          'postcss-loader'
-        ]
-      }
-    ]
+          'postcss-loader',
+        ],
+      },
+    ],
   },
   plugins: [
     new webpack.optimize.LimitChunkCountPlugin({
-      maxChunks: 1
-    })
-  ]
+      maxChunks: 1, // 限制 chunk 数量
+    }),
+  ],
 };

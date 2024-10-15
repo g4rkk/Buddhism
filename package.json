@@ -9,15 +9,13 @@
   },
   "scripts": {
     "build": "webpack --mode production",
-    "build:css": "tailwindcss -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.css"
+    "build:css": "postcss ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.css"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/g4rkk/Buddhism.git"
   },
-  "keywords": [
-
-  ],
+  "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
@@ -43,6 +41,7 @@
     "babel-plugin-macros": "^3.1.0",
     "css-loader": "^7.1.2",
     "postcss": "^8.4.47",
+    "postcss-cli": "^11.0.0",
     "postcss-loader": "^8.1.1",
     "sass": "^1.79.5",
     "sass-loader": "^16.0.2",
@@ -58,6 +57,7 @@
     "@rails/webpacker": "5.4.4",
     "chart.js": "^4.4.4",
     "daisyui": "^4.12.13",
+    "postcss-preset-env": "^10.0.7",
     "stimulus": "^3.2.2"
   },
   "packageManager": "yarn@1.22.22"
