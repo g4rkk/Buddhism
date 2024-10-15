@@ -7,13 +7,16 @@ RUN apt-get update -qq && apt-get install -y \
   curl \
   libpq-dev \
   nodejs \
-  yarn \
+  npm \
   tzdata \
   postgresql-client \
   git \
   libvips \
   pkg-config \
   python3
+
+# 安装 yarn 1.x 版本
+RUN npm install -g yarn@1.22.19
 
 # アプリケーションディレクトリの作成
 RUN mkdir /myapp
@@ -26,7 +29,7 @@ RUN bundle install
 
 # Yarnで前端依赖をインストール
 ADD package.json yarn.lock /myapp/
-RUN yarn install --check-files
+RUN yarn install  # 移除 --check-files
 
 # アプリケーションコードを追加
 ADD . /myapp
@@ -44,5 +47,5 @@ EXPOSE 4000
 # 设置生产环境变量
 ENV RAILS_ENV=production
 
-# Railsサーバーの起動
+# Railsサーバーの起动
 CMD ["rails", "server", "-b", "0.0.0.0", "-p", "4000"]
