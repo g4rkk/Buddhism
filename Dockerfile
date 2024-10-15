@@ -31,7 +31,7 @@ RUN bundle install
 
 # Yarnで前端依赖をインストール
 ADD package.json yarn.lock /myapp/
-RUN yarn install  # 移除 --check-files
+RUN yarn install
 
 # 应用代码
 ADD . /myapp
@@ -40,8 +40,8 @@ ADD . /myapp
 ARG RAILS_MASTER_KEY
 ENV RAILS_MASTER_KEY=${RAILS_MASTER_KEY}
 
-# 生产环境中预编译资产
-RUN bundle exec rails assets:precompile RAILS_ENV=production
+# 使用 yarn build 进行 Webpack 资产编译，而不是使用 rails assets:precompile
+RUN yarn build
 
 # 清理缓存以减少镜像大小
 RUN apt-get clean && \
@@ -50,8 +50,8 @@ RUN apt-get clean && \
 # ポートの公開
 EXPOSE 4000
 
-# 设置生产环境变量
-ENV RAILS_ENV=production
+# 设置开发环境变量
+ENV RAILS_ENV=development
 
 # Railsサーバーの起动
 CMD ["rails", "server", "-b", "0.0.0.0", "-p", "4000"]

@@ -7,7 +7,7 @@ ruby "3.0.7"
 gem "rails", "~> 7.0.8", ">= 7.0.8.4"
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
-gem "sprockets-rails"
+#gem "sprockets-rails"
 
 # Use postgresql as the database for Active Record
 gem "pg", "~> 1.1"
@@ -97,7 +97,8 @@ gem 'gretel'
 
 gem 'carrierwave'
 
-gem 'tailwindcss-rails'
+#gem 'tailwindcss-rails'
+
 gem 'jsbundling-rails'
 
 gem 'groupdate'

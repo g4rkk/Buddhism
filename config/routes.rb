@@ -23,6 +23,8 @@ Rails.application.routes.draw do
   get 'terms_of_service', to: 'pages#terms_of_service'
   get 'contact', to: 'pages#contact'
 
+  
+
   # 书籍相关路由 (包括书籍列表、查看、创建、书签功能)
   resources :books do
     member do
