@@ -1,27 +1,24 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  host: db
+  pool: 5
   username: postgres
   password: password
-  pool: 5
 
 development:
   <<: *default
   database: myapp_development
+  host: db  # Docker 中的数据库容器
 
 test:
   <<: *default
   database: myapp_test
+  host: db  # 在本地 Docker 环境中使用
 
 production:
-  adapter: postgresql
-  encoding: unicode
-  pool: 5
+  <<: *default
   database: buddhismrenderdb
   username: saoirseclerks
   password: 2ngrdsajh0GWsWPslIJDcloHE1oi1DBE
   host: dpg-cs6vnhd6l47c738u68ig-a.singapore-postgres.render.com
   port: 5432
-
-

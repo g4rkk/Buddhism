@@ -1,13 +1,15 @@
 version: '3.9'
 services:
   db:
-    image: postgres
+    image: postgres:13  # 指定 PostgreSQL 版本
     volumes:
       - ./tmp/db:/var/lib/postgresql/data
     environment:
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
+      POSTGRES_DB: myapp_development
     ports:
-      - "5433:5432"  # 将数据库端口暴露给外部
+      - "5433:5432"  # 外部访问的端口映射，可以根据需要调整为5432或保持5433
 
   web:
     build: .
@@ -20,3 +22,8 @@ services:
       - "4000:4000"
     depends_on:
       - db
+    environment:
+      DATABASE_URL: postgres://postgres:password@db:5432/myapp_development  # 使用 Docker 服务名称作为数据库主机
+      RAILS_ENV: development
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
