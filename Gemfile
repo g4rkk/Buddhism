@@ -104,3 +104,7 @@ gem 'jsbundling-rails'
 gem 'groupdate'
 
 gem "dockerfile-rails", ">= 1.6", :group => :development
+
+gem 'rspec-rails', '~> 5.0'
+
+gem 'shoulda-matchers', '~> 5.0'
