@@ -65,14 +65,21 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.0.7'
+
+      - name: Install dependencies
+        run: bundle install --jobs 4 --retry 3
+
+      - name: Build Docker image
+        run: docker build -t myapp .
+
       - name: Deploy to Render
         env:
           RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          DATABASE_NAME: buddhismrenderdb
-          DATABASE_USERNAME: saoirseclerks
-          DATABASE_PASSWORD: 2ngrdsajh0GWsWPslIJDcloHE1oi1DBE
-          DATABASE_HOST: dpg-cs6vnhd6l47c738u68ig-a.singapore-postgres.render.com
         run: |
           curl -X POST \
           -H "Authorization: Bearer $RENDER_API_KEY" \
