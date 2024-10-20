@@ -1,5 +1,6 @@
 class BooksController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
+  before_action :check_admin, only: [:new, :create]
 
   def index
     @books = Book.all
@@ -40,7 +41,6 @@ class BooksController < ApplicationController
       format.json { render json: { status: 'success' } }
     end
   end
-  
 
   def bookmarks
     @books = current_user.bookmarked_books
@@ -51,6 +51,13 @@ class BooksController < ApplicationController
   end
 
   private
+
+  def check_admin
+    unless current_user.admin?
+      flash[:alert] = "書籍をアップロードする権限がありません。"
+      redirect_to books_path
+    end
+  end
 
   def book_params
     params.require(:book).permit(:title, :sect, :number, :file)
