@@ -94,7 +94,7 @@ jobs:
 
       # 数据导出和导入步骤
       - name: Export local database
-        run: pg_dump -U postgres -h localhost -d myapp_development > backup.sql
+        run: pg_dump -U postgres -h localhost -p 5433 -d myapp_development > backup.sql
 
       - name: Import data to Render database
         env:
