@@ -85,12 +85,16 @@ jobs:
       - name: Install PostgreSQL client
         run: sudo apt-get install -y postgresql-client
 
-      # 仅迁移数据库表结构到Render云数据库
+      # 使用 Docker 从本地数据库容器导出表结构
+      - name: Export schema from Docker database
+        run: docker exec -t runteq_buddhism-db-1 pg_dump -U postgres -s test_database > backup.sql
+
+      # 将表结构导入到 Render 云数据库
       - name: Migrate schema to Render database
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: |
-          pg_dump -U postgres -h 127.0.0.1 -s test_database | psql -U saoirseclerks -h dpg-cs6vnhd6l47c738u68ig-a.singapore-postgres.render.com -d buddhismrenderdb
+          PGPASSWORD="${{ secrets.RENDER_DB_PASSWORD }}" psql -U saoirseclerks -h dpg-cs6vnhd6l47c738u68ig-a.singapore-postgres.render.com -d buddhismrenderdb < backup.sql
 
       # 运行数据库迁移
       - name: Run database migrations
