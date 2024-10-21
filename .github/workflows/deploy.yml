@@ -9,7 +9,6 @@ on:
       - main
 
 jobs:
-  # 测试工作流
   test:
     runs-on: ubuntu-latest
 
@@ -23,43 +22,73 @@ jobs:
         ports:
           - 5432:5432
         options: >-
-          --health-cmd="pg_isready"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=5
-
-    env:
-      DATABASE_URL: postgres://postgres:password@localhost:5432/test_database
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up Node.js 22
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.0.7'
+          bundler-cache: true
+
+      - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '22'
 
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '3.0.7'
-
       - name: Install dependencies
-        run: bundle install --jobs 4 --retry 3
+        run: |
+          bundle install
+          yarn install
 
       - name: Prepare database
+        env:
+          DATABASE_URL: postgres://postgres:password@localhost:5432/test_database
+          RAILS_ENV: test
         run: |
-          bin/rails db:create
-          bin/rails db:schema:load
+          bundle exec rails db:create
+          bundle exec rails db:schema:load
 
       - name: Run tests
+        env:
+          DATABASE_URL: postgres://postgres:password@localhost:5432/test_database
+          RAILS_ENV: test
         run: bundle exec rspec
 
-  # 部署工作流
   deploy:
     runs-on: ubuntu-latest
     needs: test
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install render CLI
+        run: |
+          curl -L https://github.com/render-oss/render-cli/releases/latest/download/render-linux-amd64 -o render
+          chmod +x render
+          sudo mv render /usr/local/bin/
+
+      - name: Deploy to Render
+        env:
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+        run: |
+          render deploy \
+            --service ${{ secrets.RENDER_SERVICE_ID }} \
+            --docker-build-context . \
+            --docker-build-file Dockerfile
+
+  migrate_schema:
+    runs-on: ubuntu-latest
+    needs: deploy
+    if: github.ref == 'refs/heads/main'
 
     steps:
       - name: Checkout code
@@ -69,48 +98,20 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.0.7'
+          bundler-cache: true
 
-      - name: Install dependencies
-        run: bundle install --jobs 4 --retry 3
-
-  # 数据库迁移和表结构导入工作流
-  migrate_schema:
-    runs-on: ubuntu-latest
-    needs: deploy
-
-    services:
-      db:
-        image: postgres:13
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: password
-          POSTGRES_DB: test_database
-        options: >-
-          --health-cmd="pg_isready"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=5
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Install PostgreSQL client
-        run: sudo apt-get install -y postgresql-client
-
-      # 使用 GitHub Actions 服务中的数据库导出表结构
-      - name: Export schema from Docker database
-        run: pg_dump -U postgres -h db -s myapp_development > backup.sql
-
-      # 将表结构导入到 Render 云数据库
-      - name: Migrate schema to Render database
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-        run: |
-          PGPASSWORD="${{ secrets.RENDER_DB_PASSWORD }}" psql -U saoirseclerks -h dpg-cs6vnhd6l47c738u68ig-a.singapore-postgres.render.com -d buddhismrenderdb < backup.sql
-
-      # 运行数据库迁移
       - name: Run database migrations
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
-        run: bundle exec rails db:migrate
+          RAILS_ENV: production
+          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+        run: |
+          bundle exec rails db:migrate
+          bundle exec rails db:seed  # 如果需要的话
+
+      - name: Verify database schema
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          RAILS_ENV: production
+          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+        run: bundle exec rails db:schema:dump
