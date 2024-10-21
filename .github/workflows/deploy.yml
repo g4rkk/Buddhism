@@ -100,7 +100,7 @@ jobs:
 
       # 使用 GitHub Actions 服务中的数据库导出表结构
       - name: Export schema from Docker database
-        run: pg_dump -U postgres -s myapp_development > backup.sql
+        run: pg_dump -U postgres -h db -s myapp_development > backup.sql
 
       # 将表结构导入到 Render 云数据库
       - name: Migrate schema to Render database
