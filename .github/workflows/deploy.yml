@@ -85,9 +85,13 @@ jobs:
       - name: Install PostgreSQL client
         run: sudo apt-get install -y postgresql-client
 
-      # 使用 Docker 从本地数据库容器导出表结构
+      # 使用 Docker 从本地数据库容器导出表结构到容器内部文件
       - name: Export schema from Docker database
-        run: docker exec -t runteq_buddhism-db-1 pg_dump -U postgres -s test_database > backup.sql
+        run: docker exec -t runteq_buddhism-db-1 pg_dump -U postgres -s test_database -f /tmp/backup.sql
+
+      # 从 Docker 容器中复制表结构文件到宿主机
+      - name: Copy backup file from Docker container
+        run: docker cp runteq_buddhism-db-1:/tmp/backup.sql ./backup.sql
 
       # 将表结构导入到 Render 云数据库
       - name: Migrate schema to Render database
