@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  # 用户认证路由
-  devise_for :users
+  # 用户认证路由，指定 omniauth_callbacks 控制器
+  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
 
   # 根路由
   root to: "home#index"
@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   # 冥想指南路由，使用 slug 作为参数
   resources :meditation_guides, param: :slug, only: [:index, :show, :new, :create]
 
-  # 冥想会话路由 (如果只允许创建会话，保持 :new 和 :create)
+  # 冥想会话路由
   resources :meditation_sessions, only: [:new, :create]
 
   # 静态页面路由
@@ -23,9 +23,7 @@ Rails.application.routes.draw do
   get 'terms_of_service', to: 'pages#terms_of_service'
   get 'contact', to: 'pages#contact'
 
-  
-
-  # 书籍相关路由 (包括书籍列表、查看、创建、书签功能)
+  # 书籍相关路由
   resources :books do
     member do
       post :toggle_bookmark

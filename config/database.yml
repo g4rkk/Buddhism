@@ -8,12 +8,12 @@ default: &default
 development:
   <<: *default
   database: myapp_development
-  host: db  # Docker 中的数据库容器
+  host: <%= ENV.fetch('POSTGRES_HOST', 'db') %>  # 使用环境变量，默认为 db
 
 test:
   <<: *default
   database: myapp_test
-  host: db  # 在本地 Docker 环境中使用
+  host: <%= ENV.fetch('POSTGRES_HOST', 'db') %>  # 使用环境变量，默认为 db
 
 production:
   <<: *default

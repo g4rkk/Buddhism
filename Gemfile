@@ -56,6 +56,8 @@ group :development, :test do
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
   gem 'pry'
   gem 'pry-byebug'
+  gem 'rspec-rails', '~> 5.0'
+  gem 'shoulda-matchers', '~> 5.0'
 end
 
 group :development do
@@ -67,13 +69,14 @@ group :development do
 
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   gem "spring"
+
+  gem 'rubocop', require: false
 end
 
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
-
 end
 
 gem 'devise'
@@ -87,7 +90,7 @@ gem 'devise-i18n-views'
 
 gem 'ransack'
 
-gem 'dotenv-rails'
+gem 'dotenv-rails', groups: [:development, :test]
 
 #gem 'google_places'
 
@@ -105,6 +108,6 @@ gem 'groupdate'
 
 gem "dockerfile-rails", ">= 1.6", :group => :development
 
-gem 'rspec-rails', '~> 5.0'
+gem 'omniauth-google-oauth2'
 
-gem 'shoulda-matchers', '~> 5.0'
+gem 'omniauth-rails_csrf_protection'

@@ -7,7 +7,8 @@ RSpec.describe Book, type: :model do
 
   it "is valid with valid attributes" do
     user = User.create!(email: "admin@example.com", password: "password", admin: true)
-    book = Book.new(title: "Sample Book", sect: "Sect", number: 1, user: user, file: fixture_file_upload(Rails.root.join('spec/fixtures/files/sample.pdf'), 'application/pdf'))
+    book = Book.new(title: "Sample Book", sect: "Sect", number: 1, user: user,
+                    file: fixture_file_upload(Rails.root.join('spec/fixtures/files/sample.pdf'), 'application/pdf'))
     expect(book).to be_valid
   end
 
