@@ -1,7 +1,7 @@
 version: '3.9'
 services:
   db:
-    image: postgres:13  # 指定 PostgreSQL 版本
+    image: postgres:17  # 指定 PostgreSQL 版本
     volumes:
       - ./tmp/db:/var/lib/postgresql/data
     environment:
@@ -18,6 +18,8 @@ services:
     tty: true
     volumes:
       - .:/myapp
+      - /etc/localtime:/etc/localtime:ro   # 挂载主机的时间配置
+      - /etc/timezone:/etc/timezone:ro     # 挂载主机的时区设置
     ports:
       - "4000:4000"
     depends_on:
