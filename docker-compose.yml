@@ -18,6 +18,8 @@ services:
     tty: true
     volumes:
       - .:/myapp
+      - /etc/localtime:/etc/localtime:ro   # 挂载主机的时间配置
+      - /etc/timezone:/etc/timezone:ro     # 挂载主机的时区设置
     ports:
       - "4000:4000"
     depends_on:

@@ -1,9 +1,7 @@
-<section class="hero is-info">
+<section class="hero bg-info rounded-lg">
   <div class="hero-body">
-    <div class="container">
-      <h1 class="title">
-        ログイン画面
-      </h1>
+    <div class="container text-center mb-20">
+      <h1 class="text-6xl font-bold text-white font-sans">ログイン画面</h1>
     </div>
   </div>
 </section>
@@ -11,38 +9,33 @@
 <section class="section">
   <div class="container">
     <div class="columns is-centered">
-      <div class="column is-5">
+      <div class="column is-7">
+        <div class="card bg-base-200 rounded-lg p-6">
+          <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "space-y-6" }) do |f| %>
 
-        <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-          <!-- メールアドレス -->
-          <div class="field">
-            <%= f.label :email, "メールアドレス", class: "label" %>
-            <p class="control has-icons-left">
-              <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "メールアドレス", class: "input" %>
-              <span class="icon is-small is-left">
-                <i class="fas fa-envelope"></i>
-              </span>
-            </p>
+            <!-- メールアドレス -->
+            <div class="form-control">
+              <%= f.label :email, "メールアドレス", class: "label" %>
+              <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "メールアドレス", class: "input input-bordered w-full" %>
+            </div>
+
+            <!-- パスワード -->
+            <div class="form-control">
+              <%= f.label :password, "パスワード", class: "label" %>
+              <%= f.password_field :password, autocomplete: "current-password", placeholder: "パスワード", class: "input input-bordered w-full" %>
+            </div>
+
+            <!-- ログインボタン -->
+            <div class="form-control mt-6">
+              <%= f.submit "ログイン", class: "btn btn-success w-full" %>
+            </div>
+          <% end %>
+
+          <!-- Google 登录按钮 -->
+          <div class="form-control mt-4">
+            <%= render "devise/shared/links" %>
           </div>
-
-          <!-- パスワード -->
-          <div class="field">
-            <%= f.label :password, "パスワード", class: "label" %>
-            <p class="control has-icons-left">
-              <%= f.password_field :password, autocomplete: "current-password", placeholder: "パスワード", class: "input" %>
-              <span class="icon is-small is-left">
-                <i class="fas fa-lock"></i>
-              </span>
-            </p>
-          </div>
-
-          <!-- ログインボタン -->
-          <div class="actions">
-            <%= f.submit "ログイン", class: "button is-success" %>
-          </div>
-        <% end %>
-
-        <%= render "devise/shared/links" %>
+        </div>
       </div>
     </div>
   </div>
