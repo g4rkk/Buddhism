@@ -1,4 +1,6 @@
 import Chart from 'chart.js/auto';
+import backgroundImage from './images/background.png';
+
 
 document.addEventListener('DOMContentLoaded', () => {
   // 获取 <canvas> 元素
