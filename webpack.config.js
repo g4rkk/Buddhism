@@ -1,5 +1,5 @@
 const path = require('path');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin'); // 插件用于提取 CSS 到单独的文件
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const webpack = require('webpack');
 
 module.exports = {
@@ -8,40 +8,53 @@ module.exports = {
   output: {
     filename: 'application.js',
     path: path.resolve(__dirname, 'public/packs'),
-    publicPath: '/packs/', // 添加这行
+    publicPath: '/packs/',
   },
   module: {
     rules: [
       {
-        test: /\.scss$/, // 处理 .scss 文件
+        test: /\.scss$/,
         use: [
-          MiniCssExtractPlugin.loader, // 使用这个插件代替 style-loader，将 CSS 提取到单独的文件
+          MiniCssExtractPlugin.loader,
           'css-loader',
           'postcss-loader',
           {
             loader: 'sass-loader',
             options: {
-              implementation: require('sass'), // 明确使用 Dart Sass
+              implementation: require('sass'),
             },
           },
         ],
       },
       {
-        test: /\.css$/, // 处理 .css 文件
+        test: /\.css$/,
         use: [
-          MiniCssExtractPlugin.loader, // 使用这个插件代替 style-loader，将 CSS 提取到单独的文件
+          MiniCssExtractPlugin.loader,
           'css-loader',
           'postcss-loader',
+        ],
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg)$/i, // 添加处理图片的规则
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+              outputPath: 'images/',
+              publicPath: '/packs/images/',
+            },
+          },
         ],
       },
     ],
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: 'application.css', // 输出的 CSS 文件名
+      filename: 'application.css',
     }),
     new webpack.optimize.LimitChunkCountPlugin({
-      maxChunks: 1, // 限制 chunk 数量
+      maxChunks: 1,
     }),
   ],
 };
