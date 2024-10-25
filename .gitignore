@@ -39,8 +39,5 @@
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
-<<<<<<< HEAD
 .DS_Store
-=======
 .env
->>>>>>> fab55c7ea90601909ccdb53578ac4a9718eb9df8

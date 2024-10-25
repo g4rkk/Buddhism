@@ -1,0 +1,2 @@
+class BuddhistQuote < ApplicationRecord
+end

@@ -6,9 +6,9 @@ module.exports = {
   ],
   theme: {
     extend: {
-      colors: {
-        n: 'rgba(219, 234, 254, 1)',
-        nc: 'rgba(75, 85, 99, 1)',
+      fontFamily: {
+        // 覆盖默认的 sans 字体为 cursive
+        sans: ['cursive', 'system-ui', '-apple-system', 'BlinkMacSystemFont'],
       },
     },
   },
