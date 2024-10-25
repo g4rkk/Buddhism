@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>仏教の世界 - 心の平安を求めて</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
-    <link rel="icon" href="/packs/images/favicon.png" type="image/x-icon">
+    <link rel="icon" href="/packs/images/favicon.ico" type="image/x-icon">
     <style>
         body {
             display: flex;
@@ -27,35 +27,35 @@
         <section class="hero is-medium">
             <div class="hero-body" style="background-image: url('/packs/images/background.png');">
                 <div class="container has-text-centered">
-                    <h1 class="title is-1">心の平安への道</h1>
-                    <h2 class="subtitle is-3">仏教の教えを学び、内なる平和を見つけましょう</h2>
+                <h1 class="title is-1" style="font-family: cursive;">心の平安への道</h1>
+                <h2 class="subtitle is-3" style="font-family: cursive;">仏教の教えを学び、内なる平和を見つけましょう</h2>                
                 </div>
             </div>
         </section>
 
         <section class="section">
             <div class="container">
-                <h2 class="title is-2">仏教の世界へようこそ</h2>
-                <p class="content">
+                <h2 class="title is-2" style="font-family: cursive;">仏教の世界へようこそ</h2>
+                <p class="content" style="font-family: cursive;">
                     ここでは、仏教の基本的な教えを探求し、瞑想技術を学び、内なる平和への道を見つけることができます。初心者から経験豊富な実践者まで、あなたの精神的な旅をサポートするリソースが豊富に用意されています。
                 </p>
                 <div class="columns is-multiline">
                     <div class="column is-one-third">
                         <div class="box">
-                            <h3 class="title is-4">瞑想技術</h3>
-                            <p>マインドフルネスや集中瞑想など、瞑想の方法を学びます。</p>
+                            <h3 class="title is-4" style="font-family: cursive;">瞑想技術</h3>
+                            <p style="font-family: cursive;">マインドフルネスや集中瞑想など、瞑想の方法を学びます。</p>
                         </div>
                     </div>
                     <div class="column is-one-third">
                         <div class="box">
-                            <h3 class="title is-4">教えの探求</h3>
-                            <p>仏教の教えや経典についての情報を見つけることができます。</p>
+                            <h3 class="title is-4" style="font-family: cursive;">教えの探求</h3>
+                            <p style="font-family: cursive;">仏教の教えや経典についての情報を見つけることができます。</p>
                         </div>
                     </div>
                     <div class="column is-one-third">
                         <div class="box">
-                            <h3 class="title is-4">コミュニティ</h3>
-                            <p>同じ志を持つ仲間と出会い、経験を共有することができます。</p>
+                            <h3 class="title is-4" style="font-family: cursive;">コミュニティ</h3>
+                            <p style="font-family: cursive;">同じ志を持つ仲間と出会い、経験を共有することができます。</p>
                         </div>
                     </div>
                 </div>
@@ -63,29 +63,30 @@
         </section>
 
         <section class="section">
-            <div class="container">
-                <h2 class="title is-3">今日の仏語</h2>
-                <blockquote class="content is-large">
-                    "長く歩き過ぎて、なぜ旅を始めたのかを忘れてはいけません。"
-                </blockquote>
-            </div>
-        </section>
+        <div class="container">
+          <h2 class="title is-3" style="font-family: cursive;">仏の言葉（10秒ごとに更新されます）</h2>
+          <blockquote id="quote" class="content is-large">
+            <%= @quotes.first.content %>
+          </blockquote>
+        </div>
+      </section>
+      
+      <script>
+        // 将所有语录从服务器传递到前端
+        const quotes = <%= raw @quotes.pluck(:content).to_json %>;
+        let index = 0;
+      
+        // 定义函数来显示下一个语录
+        function showNextQuote() {
+          const quoteElement = document.getElementById('quote');
+          index = (index + 1) % quotes.length;
+          quoteElement.textContent = quotes[index];
+        }
+      
+        // 每隔5秒切换一次语录
+        setInterval(showNextQuote, 10000);
+      </script>
+      
     </main>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
-            if ($navbarBurgers.length > 0) {
-                $navbarBurgers.forEach(el => {
-                    el.addEventListener('click', () => {
-                        const target = el.dataset.target;
-                        const $target = document.getElementById(target);
-                        el.classList.toggle('is-active');
-                        $target.classList.toggle('is-active');
-                    });
-                });
-            }
-        });
-    </script>
 </body>
 </html>

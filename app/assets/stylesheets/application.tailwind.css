@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  /* 强制应用 cursive 字体 */
+  html {
+    font-family: cursive !important;
+  }
+}
