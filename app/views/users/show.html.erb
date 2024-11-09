@@ -31,4 +31,16 @@
       <p>まだ冥想の記録がありません。</p>
     <% end %>
   </div>
+
+  <h2 class="text-2xl font-bold mb-4 text-gray-800">マークしたお寺</h2>
+<div class="space-y-4">
+  <% current_user.tagged_buddhist_sites.each do |site| %>
+    <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-md">
+      <h3 class="text-lg font-semibold text-gray-900"><%= site.name %></h3>
+      <p class="text-gray-600"><%= site.address %></p>
+    </div>
+  <% end %>
+</div>
+
+
 </div>

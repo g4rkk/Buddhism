@@ -6,6 +6,7 @@ class User < ApplicationRecord
 
   # 默认用户不是管理员
   attribute :admin, :boolean, default: false
+  attribute :location_shared, :boolean, default: true
 
   # 冥想指南和会话关联
   has_many :meditation_guides
@@ -33,4 +34,16 @@ class User < ApplicationRecord
     end
     user
   end
+
+  # 搜索标记了相同佛教场所的用户
+  def self.users_with_same_buddhist_site(user)
+    BuddhistSite.joins(:tagged_users)
+                .where(tags: { user_id: user.id })
+                .distinct
+                .flat_map(&:tagged_users)
+                .reject { |u| u.id == user.id }
+  end
+
+  has_many :tags
+  has_many :tagged_buddhist_sites, through: :tags, source: :buddhist_site
 end
