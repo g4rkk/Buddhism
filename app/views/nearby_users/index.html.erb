@@ -1,0 +1,11 @@
+<h1>仏教仲間探し</h1>
+<% if @tagged_users.any? %>
+  <% @tagged_users.each do |user| %>
+    <div>
+      <strong><%= user.username %></strong><br>
+      <p>标记的佛教场所：<%= link_to @buddhist_site.name, buddhist_site_path(@buddhist_site) %></p>
+    </div>
+  <% end %>
+<% else %>
+  <p>この仏教施設には他のユーザーのマークがありません。</p>
+<% end %>

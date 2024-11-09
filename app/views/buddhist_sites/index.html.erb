@@ -1,0 +1,94 @@
+<h1 class="text-2xl font-bold mb-4">日本国内の仏教参拝マップ</h1>
+
+<!-- 使用说明 -->
+<p class="mb-4 text-gray-700">
+  各お寺の名前をクリックすると、そのお寺を訪問先としてマークした他の仲間を見ることができます。また、地図上のマーカーをクリックして直接訪問先としてマークすることもできます。
+</p>
+
+<div id="map" style="height: 500px; margin-bottom: 1em;"></div>
+<div id="loading" class="text-center text-gray-500" style="display: none;">読み込み中...</div>
+
+<% @buddhist_sites.each do |buddhist_site| %>
+  <div class="mb-4 p-4 border rounded-lg shadow">
+    <!-- 在名称上添加链接，点击可以跳转到该寺庙的 show 页面 -->
+    <h3 class="text-lg font-semibold">
+      <%= link_to buddhist_site.name, buddhist_site_path(buddhist_site), class: 'text-blue-500 hover:underline' %>
+    </h3>
+    <p class="text-gray-600"><%= buddhist_site.address %></p>
+    
+    <% if current_user && current_user.tagged_buddhist_sites.include?(buddhist_site) %>
+      <p class="text-green-500 font-semibold mt-2">既に訪問先としてマークしました</p>
+    <% else %>
+      <%= button_to '訪問先としてマーク', tag_site_buddhist_site_path(buddhist_site), method: :post, class: 'mt-2 inline-block px-4 py-2 bg-black text-black
+     font-semibold rounded-lg shadow-md' %>
+    <% end %>
+  </div>
+<% end %>
+
+<script>
+  function initMap() {
+    const map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 8,
+      center: { lat: 35.6762, lng: 139.6503 }
+    });
+
+    document.getElementById('loading').style.display = 'block';
+
+    fetch('/api/buddhist_sites')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('数据加载失败');
+        }
+        return response.json();
+      })
+      .then(sites => {
+        document.getElementById('loading').style.display = 'none';
+
+        sites.forEach(site => {
+          const marker = new google.maps.Marker({
+            position: { lat: site.latitude, lng: site.longitude },
+            map: map,
+            title: site.name
+          });
+
+          const infoWindow = new google.maps.InfoWindow({
+            content: `<div><h3>${site.name}</h3><p>${site.address}</p></div>`
+          });
+
+          // Marker 点击事件，用于显示信息窗口和标记寺庙
+          marker.addListener('click', () => {
+            infoWindow.open(map, marker);
+
+            // 添加点击事件以标记寺庙
+            if (confirm(`${site.name}を訪問先としてマークしますか？`)) {
+              fetch(`/buddhist_sites/${site.id}/tag_site`, {
+                method: 'POST',
+                headers: {
+                  'X-CSRF-Token': '<%= form_authenticity_token %>',
+                  'Content-Type': 'application/json'
+                }
+              })
+              .then(response => {
+                if (response.ok) {
+                  alert('寺庙已成功标记为已参拜！');
+                } else {
+                  alert('标记失败，请稍后重试。');
+                }
+              })
+              .catch(error => {
+                console.error('标记请求失败:', error);
+                alert('标记失败，请稍后重试。');
+              });
+            }
+          });
+        });
+      })
+      .catch(error => {
+        document.getElementById('loading').style.display = 'none';
+        console.error('Error fetching sites:', error);
+        alert('无法加载佛教场所数据，请稍后重试。');
+      });
+  }
+</script>
+
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAPS_API_KEY'] %>&callback=initMap&loading=async"></script>

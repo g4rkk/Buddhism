@@ -111,3 +111,5 @@ gem "dockerfile-rails", ">= 1.6", :group => :development
 gem 'omniauth-google-oauth2'
 
 gem 'omniauth-rails_csrf_protection'
+
+gem 'geocoder'

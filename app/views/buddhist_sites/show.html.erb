@@ -1,0 +1,7 @@
+<h1><%= @buddhist_site.name %></h1>
+<p>地址: <%= @buddhist_site.address %></p>
+
+<!-- 添加查看附近的仏教仲間的链接 -->
+<%= link_to "参拝済みとしてマーク", tag_site_buddhist_site_path(@buddhist_site), method: :post, class: "button is-primary" %>
+<%= link_to "近くの仏教仲間を探す", nearby_users_path(buddhist_site_id: @buddhist_site.id), class: "button is-secondary" %>
+
