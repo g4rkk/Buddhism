@@ -12,10 +12,11 @@
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" integrity="sha256-UzFD2WYH2U1dQpKDjjZK72VtPeWP50NoJjd26rnAdUI=" crossorigin="anonymous" />
 
+    
     <!-- Correct Webpack output links -->
     <%= stylesheet_link_tag '/packs/application', media: 'all', 'data-turbo-track': 'reload' %>
 
-    <%= javascript_include_tag '/packs/application', 'data-turbo-track': 'reload' %>
+    <%= javascript_include_tag '/packs/application', 'data-turbo-track': 'reload', defer: true %>
       
 
     <!-- OGP Meta Tags for Social Sharing -->

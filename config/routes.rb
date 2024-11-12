@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
+  # Nearby users and Buddhist sites index routes
   get 'nearby_users/index'
   get 'buddhist_sites/index'
+
   # 用户认证路由，指定 omniauth_callbacks 控制器
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
 
@@ -46,16 +48,24 @@ Rails.application.routes.draw do
   end
 
   # 用户界面路由
-    get 'buddhist_sites', to: 'buddhist_sites#index', as: 'buddhist_sites'
-    get 'nearby_users', to: 'nearby_users#index', as: 'nearby_users'
+  get 'buddhist_sites', to: 'buddhist_sites#index', as: 'buddhist_sites'
+  get 'nearby_users', to: 'nearby_users#index', as: 'nearby_users'
 
-  # config/routes.rb
-  resources :buddhist_sites do
-    member do
-      post :tag_site
-    end
-    collection do
-      get :fetch_buddhist_sites
-    end
+  # 佛教场所相关路由
+resources :buddhist_sites do
+  member do
+    post :tag_site
   end
+  collection do
+    get :fetch_buddhist_sites
+  end
+
+  # 为 conversations 添加 :show 和 :create 路由，并嵌套 messages 路由
+  resources :conversations, only: [:create, :show] do
+    resources :messages, only: [:create] # 嵌套路由用于创建消息
+  end
+end
+
+# 添加 ActionCable 路由
+mount ActionCable.server => '/cable'
 end

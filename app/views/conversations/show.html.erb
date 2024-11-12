@@ -1,0 +1,24 @@
+<h1> <%= @conversation.user.username %>さんとのチャットです</h1>
+
+<div id="messages">
+  <%= render @messages %>
+</div>
+
+<%= form_with(
+      url: buddhist_site_conversation_messages_path(@conversation.buddhist_site, @conversation),
+      local: false,
+      id: 'message-form',
+      data: { 
+        turbo: false,
+        remote: true
+      }
+    ) do |form| %>
+  <div>
+    <%= form.text_area :content, rows: 5, placeholder: "メッセージを入力...", class: "textarea textarea-bordered w-full h-32" %>
+  </div>
+  <div class="mt-4">
+    <%= form.submit "送信", class: "btn btn-primary" %>
+  </div>
+<% end %>
+
+<input type="hidden" id="conversation-id" value="<%= @conversation.id %>">
