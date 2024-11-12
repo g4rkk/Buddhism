@@ -27,8 +27,8 @@
         <section class="hero is-medium">
             <div class="hero-body" style="background-image: url('/packs/images/background.png');">
                 <div class="container has-text-centered">
-                <h1 class="title is-1" style="font-family: cursive;">心の平安への道</h1>
-                <h2 class="subtitle is-3" style="font-family: cursive;">仏教の教えを学び、内なる平和を見つけましょう</h2>                
+                    <h1 class="title is-1" style="font-family: cursive;">心の平安への道</h1>
+                    <h2 class="subtitle is-3" style="font-family: cursive;">仏教の教えを学び、内なる平和を見つけましょう</h2>                
                 </div>
             </div>
         </section>
@@ -63,30 +63,57 @@
         </section>
 
         <section class="section">
-        <div class="container">
-          <h2 class="title is-3" style="font-family: cursive;">仏の言葉（10秒ごとに更新されます）</h2>
-          <blockquote id="quote" class="content is-large">
-            <%= @quotes.first.content %>
-          </blockquote>
-        </div>
-      </section>
-      
-      <script>
-        // 将所有语录从服务器传递到前端
-        const quotes = <%= raw @quotes.pluck(:content).to_json %>;
-        let index = 0;
-      
-        // 定义函数来显示下一个语录
-        function showNextQuote() {
-          const quoteElement = document.getElementById('quote');
-          index = (index + 1) % quotes.length;
-          quoteElement.textContent = quotes[index];
+            <div class="container">
+                <h2 class="title is-3" style="font-family: cursive;">仏の言葉（10秒ごとに更新されます）</h2>
+                <!-- 在语录元素中添加默认文本 -->
+                <blockquote id="quote" class="content is-large">
+                    <%= @quotes.first&.content || "仏の知恵を受け入れましょう" %>
+                </blockquote>
+            </div>
+        </section>
+
+        <script>
+            // 将所有语录从服务器传递到前端，使用全局变量 window.quotes
+            // 将变量和函数定义移到全局作用域
+if (!window.quoteSystem) {
+    window.quoteSystem = {
+        quotes: <%= raw @quotes.pluck(:content).to_json %>,
+        index: 0,
+        intervalId: null,
+        
+        // 显示下一个语录的方法
+        showNextQuote: function() {
+            const quoteElement = document.getElementById('quote');
+            if (quoteElement && this.quotes.length > 0) {
+                this.index = (this.index + 1) % this.quotes.length;
+                quoteElement.textContent = this.quotes[this.index];
+            }
         }
-      
-        // 每隔5秒切换一次语录
-        setInterval(showNextQuote, 10000);
-      </script>
-      
+    };
+}
+
+// 事件监听器
+document.addEventListener('turbo:load', () => {
+    // 清除之前的定时器（如果存在）
+    if (window.quoteSystem.intervalId) {
+        clearInterval(window.quoteSystem.intervalId);
+    }
+    
+    // 设置新的定时器
+    if (window.quoteSystem.quotes.length > 0) {
+        window.quoteSystem.intervalId = setInterval(() => {
+            window.quoteSystem.showNextQuote();
+        }, 10000);
+    }
+});
+
+// 可选：在页面卸载时清理定时器
+document.addEventListener('turbo:before-cache', () => {
+    if (window.quoteSystem.intervalId) {
+        clearInterval(window.quoteSystem.intervalId);
+    }
+});
+        </script>
     </main>
 </body>
 </html>

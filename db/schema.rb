@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_10_29_090227) do
+ActiveRecord::Schema[7.0].define(version: 2024_11_09_173810) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -51,6 +51,15 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_29_090227) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "conversations", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "buddhist_site_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["buddhist_site_id"], name: "index_conversations_on_buddhist_site_id"
+    t.index ["user_id"], name: "index_conversations_on_user_id"
+  end
+
   create_table "meditation_guides", force: :cascade do |t|
     t.string "title"
     t.text "description"
@@ -69,6 +78,17 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_29_090227) do
     t.datetime "updated_at", null: false
     t.index ["meditation_guide_id"], name: "index_meditation_sessions_on_meditation_guide_id"
     t.index ["user_id"], name: "index_meditation_sessions_on_user_id"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.bigint "conversation_id", null: false
+    t.string "sender_type", null: false
+    t.bigint "sender_id", null: false
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["conversation_id"], name: "index_messages_on_conversation_id"
+    t.index ["sender_type", "sender_id"], name: "index_messages_on_sender"
   end
 
   create_table "tags", force: :cascade do |t|
@@ -101,9 +121,12 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_29_090227) do
   add_foreign_key "bookmarks", "books"
   add_foreign_key "bookmarks", "users"
   add_foreign_key "books", "users"
+  add_foreign_key "conversations", "buddhist_sites"
+  add_foreign_key "conversations", "users"
   add_foreign_key "meditation_guides", "users"
   add_foreign_key "meditation_sessions", "meditation_guides"
   add_foreign_key "meditation_sessions", "users"
+  add_foreign_key "messages", "conversations"
   add_foreign_key "tags", "buddhist_sites"
   add_foreign_key "tags", "users"
 end

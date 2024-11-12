@@ -19,7 +19,7 @@
     <% if current_user && current_user.tagged_buddhist_sites.include?(buddhist_site) %>
       <p class="text-green-500 font-semibold mt-2">既に訪問先としてマークしました</p>
     <% else %>
-      <%= button_to '訪問先としてマーク', tag_site_buddhist_site_path(buddhist_site), method: :post, class: 'mt-2 inline-block px-4 py-2 bg-black text-black
+      <%= button_to '訪問先としてマーク', tag_site_buddhist_site_path(buddhist_site), method: :post, class: 'mt-2 inline-block px-4 py-2 bg-black text-white
      font-semibold rounded-lg shadow-md' %>
     <% end %>
   </div>
