@@ -26,7 +26,6 @@ Rails.application.configure do
 
   config.public_file_server.enabled = true
 
-
   # Compress CSS using a preprocessor.
   # config.assets.css_compressor = :sass
 
@@ -44,12 +43,11 @@ Rails.application.configure do
   config.active_storage.service = :local
 
   #Mount Action Cable outside main process or domain.
-  # config.action_cable.mount_path = nil
-  # config.action_cable.url = "wss://example.com/cable"
-  # config.action_cable.allowed_request_origins = [ "http://example.com", /http:\/\/example.*/ ]
+  config.action_cable.url = "wss://buddhismworld.onrender.com/cable"
+  config.action_cable.allowed_request_origins = ['https://buddhismworld.onrender.com', 'https://www.buddhismworld.online']
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  # config.force_ssl = true
+  config.force_ssl = true  # Enabling SSL to force HTTPS
 
   # Include generic and useful information about system operation, but avoid logging too much
   # information to avoid inadvertent exposure of personally identifiable information (PII).
@@ -94,7 +92,10 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
+  # Add your custom domains here
   config.hosts << "buddhismworld.onrender.com"
+  config.hosts << "buddhismworld.online"
+  config.hosts << "www.buddhismworld.online"  # Add this line to allow the www subdomain
 
   config.log_level = :debug
 end

@@ -1,19 +1,24 @@
+const defaultTheme = require('tailwindcss/defaultTheme')
+
 module.exports = {
   content: [
-    './app/views/**/*.html.erb',
+    './public/*.html',
+    './app/views/**/*.{erb,haml,html,slim}',
     './app/helpers/**/*.rb',
-    './app/javascript/**/*.js'
+    './app/javascript/**/*.js',
+    './app/javascript/**/*.css'  // 更新路径
   ],
   theme: {
     extend: {
       fontFamily: {
-        // 覆盖默认的 sans 字体为 cursive
         sans: ['cursive', 'system-ui', '-apple-system', 'BlinkMacSystemFont'],
       },
     },
   },
   plugins: [
     require('daisyui'),
-    require('autoprefixer'),
+    require('@tailwindcss/forms'),
+    require('@tailwindcss/typography'),
+    require('@tailwindcss/container-queries')
   ],
 };

@@ -75,4 +75,8 @@ Rails.application.configure do
   config.web_console.allowed_ips = '0.0.0.0/0'
 
   config.public_file_server.enabled = true
+  config.action_cable.url = "ws://localhost:4000/cable"
+  config.action_cable.allowed_request_origins = [ 'http://localhost:4000' ]
+
+
 end

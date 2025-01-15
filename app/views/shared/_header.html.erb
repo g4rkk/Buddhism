@@ -1,5 +1,5 @@
 <header>
-  <nav class="navbar is-warning" role="navigation" aria-label="main navigation">
+  <nav class="navbar is-warning" role="navigation" aria-label="main navigation" data-turbo="false">
     <div class="container">
       <div class="navbar-brand">
         <%= link_to root_path, class: "navbar-item" do %>
@@ -17,13 +17,8 @@
         <div class="navbar-start">
           <%= link_to "ホーム", root_path, class: "navbar-item" %>
           <%= link_to "瞑想ガイド", meditation_guides_path, class: "navbar-item" %>
-
           <%= link_to "仏教入門", books_path, class: "navbar-item" %>
-
           <%= link_to "ブックマーク", bookmarks_books_path, class: "navbar-item" %>
-
-          <!-- 新增仏教仲間探し和日本国内の仏教参拝マップ链接 -->
-          <%= link_to "仏教仲間探し", nearby_users_path, class: "navbar-item" %>
           <%= link_to "仏教参拝マップ", buddhist_sites_path, class: "navbar-item" %>
         </div>
 
@@ -46,19 +41,19 @@
 
   <!-- JavaScript to handle the burger menu toggle -->
   <script>
-      document.addEventListener('DOMContentLoaded', () => {
-          const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
-          if ($navbarBurgers.length > 0) {
-              $navbarBurgers.forEach(el => {
-                  el.addEventListener('click', () => {
-                      const target = el.dataset.target;
-                      const $target = document.getElementById(target);
-                      el.classList.toggle('is-active');
-                      $target.classList.toggle('is-active');
-                  });
-              });
-          }
-      });
+    document.addEventListener('turbo:load', () => {
+        document.querySelectorAll('.navbar-burger').forEach(el => {
+            el.addEventListener('click', () => {
+                const target = el.dataset.target;
+                const $target = document.getElementById(target);
+                
+                // 切换按钮和菜单的 'is-active' 类
+                el.classList.toggle('is-active');
+                if ($target) {
+                    $target.classList.toggle('is-active');
+                }
+            });
+        });
+    });
   </script>
-  
 </header>
