@@ -41,3 +41,6 @@ yarn-debug.log*
 .yarn-integrity
 .DS_Store
 .env
+backups/
+public/uploads/
+/*.sql
